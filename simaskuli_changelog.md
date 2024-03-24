@@ -1,0 +1,25 @@
+# Changelog v0.1a
+
+## New:
+
+-   Ditambahkan page baru (profile, register, dan login)
+-   Sudah terkoneksi database dan sudah dapat melakukan login dan register
+
+## Changes:
+
+-   Perubahan settingan pada Laravel untuk menyesuaikan development local Next.js
+
+## Bug:
+
+-   Sementara belum dipasang logika untuk mencocokan input password dan confirm-pass pada register
+-   Setelah membuat akun, mungkin tidak ada perubahan apa-apa. Untuk sementara, Anda bisa cek ke `localhost:8000/api/users` untuk melihat sudah tersimpan atau belum
+-   Untuk masuk ke halaman profile, bisa login terlebih dahulu (Anda bisa menggunakan akun yang didaftarkan atau akun sementara:
+    -   **Email:** `kyota@fakhrif.my.id`
+    -   **Password:** `itskyota!`
+-   Akan muncul error 500 ketika Anda mengalami redirect dari `/profile` ke `/login` (abaikan saja)
+-   Untuk logout, sementara Anda bisa inspect -> application -> storage -> local storage -> `localhost:3000` -> hapus key 'id_user'
+
+## Notes:
+
+-   Pastikan menjalankan Laravel dan Next.js
+-   Untuk frontend, Anda mungkin hanya melihat halaman kosong di `localhost:3000`. Oleh karena itu, Anda bisa pindah manual ke `/profile` (akan diarahkan ke form login jika belum login)
