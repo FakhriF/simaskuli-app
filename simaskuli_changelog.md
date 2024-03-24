@@ -16,7 +16,7 @@
 -   Untuk masuk ke halaman profile, bisa login terlebih dahulu (Kalian bisa menggunakan akun yang didaftarkan atau akun sementara:
     -   **Email:** `kyota@fakhrif.my.id`
     -   **Password:** `itskyota!`
--   Akan muncul error 500 ketika Anda mengalami redirect dari `/profile` ke `/login` (abaikan saja)
+-   Akan muncul error 500 ketika mengalami redirect dari `/profile` ke `/login` (abaikan saja)
 -   Untuk logout, sementara Anda bisa inspect -> application -> storage -> local storage -> `localhost:3000` -> hapus key 'id_user'
 
 ## Notes:
