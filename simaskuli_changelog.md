@@ -11,9 +11,9 @@
 
 ## Bug:
 
--   Sementara belum dipasang logika untuk mencocokan input password dan confirm-pass pada register
--   Setelah membuat akun, mungkin tidak ada perubahan apa-apa. Untuk sementara, Anda bisa cek ke `localhost:8000/api/users` untuk melihat sudah tersimpan atau belum
--   Untuk masuk ke halaman profile, bisa login terlebih dahulu (Anda bisa menggunakan akun yang didaftarkan atau akun sementara:
+-   Sementara belum dipasang logic untuk mencocokan input password dan confirm-pass pada register
+-   Setelah membuat akun, mungkin tidak ada perubahan apa-apa. Untuk sementara, Kalian bisa cek ke `localhost:8000/api/users` untuk melihat sudah tersimpan atau belum
+-   Untuk masuk ke halaman profile, bisa login terlebih dahulu (Kalian bisa menggunakan akun yang didaftarkan atau akun sementara:
     -   **Email:** `kyota@fakhrif.my.id`
     -   **Password:** `itskyota!`
 -   Akan muncul error 500 ketika Anda mengalami redirect dari `/profile` ke `/login` (abaikan saja)
@@ -22,4 +22,4 @@
 ## Notes:
 
 -   Pastikan menjalankan Laravel dan Next.js
--   Untuk frontend, Anda mungkin hanya melihat halaman kosong di `localhost:3000`. Oleh karena itu, Anda bisa pindah manual ke `/profile` (akan diarahkan ke form login jika belum login)
+-   Untuk frontend, Kalian mungkin hanya melihat halaman kosong di `localhost:3000`. Oleh karena itu, Kalian bisa pindah manual ke `/profile` (akan diarahkan ke form login jika belum login)
