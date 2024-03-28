@@ -6,14 +6,17 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { deleteToken, deleteUserData, getToken } from "../actions";
+import { LoadingModal } from "./loading";
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const toggleDropdown = () => setIsOpen(!isOpen);
+    const [loading, setLoading] = useState(false);
 
     const router = useRouter();
 
     const logout = async () => {
+        setLoading(true);
         try {
             const token = await getToken();
 
@@ -37,6 +40,7 @@ export default function Navbar() {
 
     return (
         <nav className="flex items-center justify-between p-4 bg-slate-800 text-white">
+            {loading && <LoadingModal showModal={loading} />}
             <div className="flex items-center">
                 {/* <Image src="/logo.png" alt="logo" width={50} height={50} /> */}
                 <span className="ml-4 font-bold text-2xl">SI-MASKULI</span>
