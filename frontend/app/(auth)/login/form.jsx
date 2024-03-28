@@ -3,10 +3,12 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { addToken, addUserData } from "@/app/(general)/actions";
 
 export default function LoginForm() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [remember, setRemember] = useState(false);
     const [error, setError] = useState("");
 
     const router = useRouter();
@@ -21,11 +23,11 @@ export default function LoginForm() {
                 {
                     email: email,
                     password: password,
+                    remember: remember,
                 }
             );
             if (response.status === 200) {
-                // set the token in local storage
-                localStorage.setItem("id_user", response.data.user.id);
+                addToken(response.data.access_token);
 
                 router.push("/profile");
             } else {
@@ -63,6 +65,18 @@ export default function LoginForm() {
                     required
                 />
             </div>
+            {/* Remember me */}
+            {/* <div className="mb-4 flex items-center">
+                <input
+                    type="checkbox"
+                    className="w-4 h-4 border-gray-300 rounded"
+                    name="remember"
+                    onChange={(e) => {
+                        setRemember(e.target.checked);
+                    }}
+                />
+                <label className="ml-2 text-sm">Remember me</label>
+            </div> */}
             <div className="text-left mb-4 text-sm">
                 <a
                     href="/login/forgot"
