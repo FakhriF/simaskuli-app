@@ -3,12 +3,13 @@ import { useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import axios from "axios";
+import { deleteToken, getToken } from "../actions";
 
-export default function ProfileElement() {
+export default function ProfileElement({ user }) {
     const searchParams = useSearchParams();
     const pathname = usePathname();
 
-    console.log(pathname);
+    // console.log(pathname);
 
     return (
         <div className="flex gap-4 mt-8 max-w-5xl mx-auto">
@@ -71,7 +72,9 @@ export default function ProfileElement() {
             </nav>
             {pathname === "/profile" && <ProfileSection />}
             {pathname === "/profile/settings" && <ProfileSettingsPage />}
-            {pathname === "/profile/delete" && <ProfileDeletionPage />}
+            {pathname === "/profile/delete" && (
+                <ProfileDeletionPage email={user.email} />
+            )}
             {pathname === "/profile/course" && <ProfileCoursePage />}
         </div>
     );
@@ -104,37 +107,41 @@ function ProfileSettingsPage() {
     );
 }
 
-function ProfileDeletionPage() {
-    const [input, setInput] = useState("");
-    const [userData, setUserData] = useState({});
-    const [isFetch, setIsFetch] = useState(false);
+function ProfileDeletionPage({ email }) {
+    const [emailInput, setEmailInput] = useState("");
+    const [showModal, setShowModal] = useState(false);
+    const [error, setError] = useState("");
 
-    const router = useRouter();
-
-    // if logged in, check the user_id in local storage
-    const userId =
-        typeof window !== "undefined"
-            ? window.localStorage.getItem("id_user")
-            : null;
-
-    if (!userId) {
-        // if not logged in, redirect to login page
-        router.push("/login");
-    }
-
-    useEffect(() => {
-        if (!isFetch) {
-            axios
-                .get(`http://localhost:8000/api/users/${userId}`)
-                .then((response) => {
-                    // set the data in the state
-                    setUserData(response.data);
-                    console.log(response.data);
-                });
+    
+    const handleDelete = async () => {
+        if (emailInput !== email) {
+            setError("Email tidak sesuai");
+            return;
         }
-        setIsFetch(true);
-        // get the user data from the backend
-    });
+
+        try {
+            const token = await getToken();
+
+            await fetch("http://localhost:8000/api/user", {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            }).then((response) => {
+                if (response.status === 200) {
+                    // remove token and redirect to login
+                    deleteToken();
+                    router.push("/login");
+                } else {
+                    setError(response.data.message);
+                }
+            });
+        } catch (error) {
+            console.log(error);
+            setError(error.response.data.message);
+        }
+    };
 
     return (
         <div className="w-full p-4">
@@ -143,20 +150,52 @@ function ProfileDeletionPage() {
                 Pada halaman ini, Anda dapat menghapus profil akun Anda. Anda
                 tidak dapat mengembalikan akun anda apabila Anda menghapusnya.
             </p>
-            <p className="text-gray-500 mt-4">
-                Apakah Anda yakin ingin menghapus profil akun Anda?
-            </p>
-            <p className="text-gray-500 mt-4">
-                Silahkan ketik ulang: {"  "}
-                <span className="text-red-500">{userData.email}</span>
-                <input
-                    type="text"
-                    className="w-full px-4 py-2 border rounded-lg"
-                    // value={input}
-                    // onChange={(e) => setInput(e.target.value)}
-                />
-            </p>
-            <button className="outline outline-1 outline-red-500 text-red-500 py-2 px-4 rounded-lg mt-4 text-sm">
+
+            {/* create modal to confirm */}
+            {showModal && (
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+                    <div className="bg-white p-4 rounded-lg">
+                        <p className="text-lg font-bold">Hapus Profil?</p>
+                        <p className="text-gray-500 mt-4">
+                            Silahkan ketik ulang: {"  "}
+                            <span className="text-red-500">{email}</span>
+                            <input
+                                type="text"
+                                className={`w-full px-4 py-2 border rounded-lg ${
+                                    error && "border-red-500"
+                                }`}
+                                value={emailInput}
+                                onChange={(e) => setEmailInput(e.target.value)}
+                            />
+                            {error && (
+                                <p className="text-red-500 text-sm">{error}</p>
+                            )}
+                        </p>
+                        <div className="flex justify-end mt-4">
+                            <button
+                                className="outline outline-1 outline-gray-300 text-gray-500 px-4 py-2 rounded-lg mr-2"
+                                onClick={() => {
+                                    setShowModal(false),
+                                        setError(""),
+                                        setEmailInput("");
+                                }}
+                            >
+                                Batal
+                            </button>
+                            <button
+                                className="outline outline-1 outline-red-500 text-red-500 px-4 py-2 rounded-lg"
+                                onClick={handleDelete}
+                            >
+                                Hapus
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+            <button
+                className="outline outline-1 outline-red-500 text-red-500 py-2 px-4 rounded-lg mt-4 text-sm"
+                onClick={() => setShowModal(true)}
+            >
                 Delete Profile
             </button>
         </div>
