@@ -1,4 +1,4 @@
-# Changelog v0.2a (xx Maret 2024)
+# Changelog v0.2a (28 Maret 2024)
 
 ## New:
 
