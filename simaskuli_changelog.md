@@ -16,7 +16,7 @@
 
 -   Sudah terpasang logic untuk mencocokan input password dan confirm-pass pada register
 -   Memperbaiki error 500 ketika redirect dari `/profile` ke `/login`
--   Setelah melakukan registrasi sudah direct ke `/profile`
+-   Setelah melakukan registrasi sudah redirect ke `/profile`
 
 ## Bug:
 
