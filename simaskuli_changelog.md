@@ -1,3 +1,29 @@
+# Changlog v0.2a (xx Maret 2024)
+
+## New:
+- Penggunaan Cookies pada web Si-Mas Kuli
+- Sudah dapat melakukan hapus pengguna (profile/delete)
+- Loading Modal ketika Login, Register, Delete, Logout
+- Menambahkan Navigation Bar pada website
+- Akses mudah untuk Log Out
+
+## Changes:
+- Menggunakan sessions sebagai data yang dipegang oleh user secara langsung di aplikasi
+
+## Bug Fixes:
+- Sudah terpasang logic untuk mencocokan input password dan confirm-pass pada register
+- Memperbaiki error 500 ketika redirect dari `/profile` ke `/login`
+- Setelah melakukan registrasi sudah direct ke `/profile`
+
+## Bug:
+- Terkadang sesudah registrasi akan mengalami flicker/freeze. (Sedang Diatasi!)
+- Ketika melakukan Delete Profile, baru bisa menghapus satu session aktif tidak seluruh session dari akun tersebut
+
+## Notes:
+-   Untuk masuk ke halaman profile, bisa login terlebih dahulu (Kalian bisa menggunakan akun yang didaftarkan atau akun sementara:
+    -   **Email:** `kyota@fakhrif.my.id`
+    -   **Password:** `itskyota!`
+
 # Changelog v0.1a (24 Maret 2024)
 
 ## New:
