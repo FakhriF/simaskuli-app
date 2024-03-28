@@ -4,6 +4,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import axios from "axios";
 import { deleteToken, getToken } from "../actions";
+import { LoadingModal } from "../components/loading";
 
 export default function ProfileElement({ user }) {
     const searchParams = useSearchParams();
@@ -112,10 +113,16 @@ function ProfileDeletionPage({ email }) {
     const [showModal, setShowModal] = useState(false);
     const [error, setError] = useState("");
 
-    
+    const [loading, setLoading] = useState(false);
+
+    const router = useRouter();
+
     const handleDelete = async () => {
+        setLoading(true);
+
         if (emailInput !== email) {
             setError("Email tidak sesuai");
+            setLoading(false);
             return;
         }
 
@@ -135,16 +142,19 @@ function ProfileDeletionPage({ email }) {
                     router.push("/login");
                 } else {
                     setError(response.data.message);
+                    setLoading(false);
                 }
             });
         } catch (error) {
             console.log(error);
             setError(error.response.data.message);
+            setLoading(false);
         }
     };
 
     return (
         <div className="w-full p-4">
+            {loading && <LoadingModal showModal={loading} />}
             <h1 className="text-2xl font-bold mb-4">Delete Profile</h1>
             <p className="text-gray-500">
                 Pada halaman ini, Anda dapat menghapus profil akun Anda. Anda
@@ -153,7 +163,7 @@ function ProfileDeletionPage({ email }) {
 
             {/* create modal to confirm */}
             {showModal && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-5">
                     <div className="bg-white p-4 rounded-lg">
                         <p className="text-lg font-bold">Hapus Profil?</p>
                         <p className="text-gray-500 mt-4">
