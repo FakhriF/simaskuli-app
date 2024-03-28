@@ -4,40 +4,14 @@ import Link from "next/link";
 import ProfileElement from "./profileElement";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+
 import { useEffect, useState } from "react";
 
-export default function ProfileBioElement() {
-    const [userData, setUserData] = useState({});
-    const [isFetch, setIsFetch] = useState(false);
-
-    const router = useRouter();
-
-    // if logged in, check the user_id in local storage
-    const userId =
-        typeof window !== "undefined"
-            ? window.localStorage.getItem("id_user")
-            : null;
-
-    if (!userId) {
-        // if not logged in, redirect to login page
-        router.push("/login");
-    }
-
-    useEffect(() => {
-        if (!isFetch) {
-            axios
-                .get(`http://localhost:8000/api/users/${userId}`)
-                .then((response) => {
-                    // set the data in the state
-                    setUserData(response.data);
-                    console.log(response.data);
-                });
-        }
-        setIsFetch(true);
-        // get the user data from the backend
-    });
-
-    // if logged in, render the profile element
+export default function ProfileBioElement({ user }) {
+    const userData = {
+        name: user.name,
+        email: user.email,
+    };
 
     return (
         <div className="flex flex-col items-center min-h-screen">
@@ -49,7 +23,8 @@ export default function ProfileBioElement() {
                     <p className="text-gray-500">{userData.email}</p>
                 </div>
             </div>
-            <ProfileElement />
+            <ProfileElement user={user} />
         </div>
     );
+    // }
 }
