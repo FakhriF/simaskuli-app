@@ -1,3 +1,4 @@
+import Link from 'next/link';
 
 export const metadata = {
   title: "Forum",
@@ -75,8 +76,8 @@ export default function ForumPage() {
               </div>
             </article> */}
 
-
-            <a href="#" class="block p-6 border border-black rounded-md shadow hover:bg-gray-100 flex items-end justify-between">
+            <Link href="/forum/1">
+            <div class="block p-6 border border-black rounded-md shadow hover:bg-gray-100 flex items-end justify-between">
               <div class="flex-grow">
                 <h5 class="mb-2 text-xl font-bold  ">Lorem Ipsum</h5>
                 <p class="font-normal text-gray-6000 ">By Anon, December 31, 2024</p>
@@ -94,7 +95,8 @@ export default function ForumPage() {
 
                       <span className="text-sm text-gray-400">99 views</span> 
               </div>
-            </a>
+            </div>
+            </Link>
 
             <a href="#" class="block p-6 border border-black rounded-md shadow hover:bg-gray-100 flex items-end justify-between">
               <div class="flex-grow">
