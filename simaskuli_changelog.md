@@ -19,7 +19,7 @@
 -   Untuk masuk ke halaman selain Login dan Register, diharuskan **login terlebih dahulu**! Kalian bisa mendaftar akun baru atau menggunakan akun sementara di bawah:
     -   **Email:** `kyota@fakhrif.my.id`
     -   **Password:** `itskyota!`
--   Berkaitan dengan bug nomor dua, jika itu terjadi silahkan lakukan penghapusan cookies untuk localhost:3000
+-   Berkaitan dengan bug nomor dua, jika itu terjadi silahkan lakukan penghapusan cookies untuk localhost:3000, lalu langsung lakukan login
 
 # Changelog v0.2a (28 Maret 2024)
 
