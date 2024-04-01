@@ -11,12 +11,16 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('users', [UserController::class, 'index']);
-Route::post('users', [UserController::class, 'store']);
+// Route::post('users', [UserController::class, 'store']);
 Route::get('users/{id}', [UserController::class, 'show']);
 
 //Get a user
 Route::get('user', [UserController::class, 'getUser']);
+Route::put('user', [UserController::class, 'editUser']);
+Route::put('user/password', [UserController::class, 'changePassword']);
+Route::get('user/session', [UserController::class, 'getAllSession']);
 Route::delete('user', [UserController::class, 'deleteUser']);
+
 
 //Auth
 Route::post('login', [AuthController::class, 'login']);
