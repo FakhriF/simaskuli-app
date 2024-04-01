@@ -4,12 +4,24 @@ import { redirect } from "next/navigation";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
     const cookieStore = cookies();
     const hasCookie = cookieStore.has("token");
 
     if (hasCookie) {
-        redirect("/profile");
+        const token = cookieStore.get("token").value;
+
+        await fetch(`http://localhost:8000/api/user/session/${token}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+        }).then((response) => {
+            if (response.status === 200) {
+                redirect("/profile");
+            }
+        });
     }
 
     return <>{children}</>;
