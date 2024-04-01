@@ -13,14 +13,14 @@
 - Mengubah nama Profile pada Side NavBar di `/profile` menjadi Edit Profile
 
 ## Bug Fixes:
-- Ketika klik salah satu menu dropdown di navigation bar, maka menu akan tertutup langsung
+-   Ketika klik salah satu menu dropdown di navigation bar, maka menu akan tertutup langsung
+-   Ketika melakukan Delete Profile, sudah dapat menghapus seluruh token/sessions dari user tersebut
+-   Freeze/Flickering ketika masuk ke halaman website seharusnya sudah menghilang (Tetap terjadi jika tidak terkoneksi internet (lihat Notes))
 
 ## Bug:
 
 -   **(NEW!)** Connected Devices masih berurut berdasarkan last activity sehingga perangkat yang digunakan bisa saja di posisi bawah
 -   Sedikit elemen mengalami inkonsistensi warna atau behaviour ketika dilakukan hovering
--   Terkadang sesudah registrasi akan mengalami flicker/freeze.
--   Ketika melakukan Delete Profile, baru bisa menghapus satu session aktif tidak seluruh session dari akun tersebut
 
 ## Notes:
 
