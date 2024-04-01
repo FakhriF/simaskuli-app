@@ -41,10 +41,30 @@ export default function Navbar() {
     return (
         <nav className="flex items-center justify-between p-4 bg-slate-800 text-white">
             {loading && <LoadingModal showModal={loading} />}
-            <div className="flex items-center">
-                {/* <Image src="/logo.png" alt="logo" width={50} height={50} /> */}
-                <span className="ml-4 font-bold text-2xl">SI-MASKULI</span>
+            <div className="flex items-center gap-8">
+                <div className="flex items-center">
+                    {/* <Image src="/logo.png" alt="logo" width={50} height={50} /> */}
+                    <Link
+                        className="ml-4 font-bold text-2xl hover:text-gray-300"
+                        href="/"
+                    >
+                        SI-MASKULI
+                    </Link>
+                </div>
+
+                <div className="flex items-center gap-4">
+                    <Link href="#" className="hover:text-gray-300 font-bold">
+                        Course
+                    </Link>
+                    <Link
+                        href="/forum"
+                        className="hover:text-gray-300 font-bold"
+                    >
+                        Forum
+                    </Link>
+                </div>
             </div>
+
             <div className="relative">
                 <button
                     onClick={toggleDropdown}
@@ -57,9 +77,11 @@ export default function Navbar() {
                 {isOpen && (
                     <div className="absolute right-0 z-10 bg-white rounded-md shadow-md">
                         <ul className="p-4 text-gray-800">
-                            <li className="px-4 py-2 hover:bg-gray-200 rounded-md">
-                                <Link href="/profile">My Account</Link>
-                            </li>
+                            <Link href="/profile">
+                                <li className="px-4 py-2 hover:bg-gray-200 rounded-md">
+                                    My Account
+                                </li>
+                            </Link>
                             <li className="px-4 py-2 hover:bg-red-200 hover:text-red-600 cursor-pointer rounded-md">
                                 <div onClick={logout}>Logout</div>
                             </li>

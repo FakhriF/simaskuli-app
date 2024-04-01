@@ -1,3 +1,26 @@
+# Changelog v0.3a (31 Maret 2024)
+
+## New:
+
+- Tambahan halaman baru yaitu Forum (/forum)
+
+## Changes:
+
+- Menambahkan link ke Forum dan Course (Masih #) pada Navigation Bar
+
+## Bug:
+
+-   **(NEW!)** Sedikit elemen mengalami inkonsistensi warna atau behaviour ketika dilakukan hovering
+-   Terkadang sesudah registrasi akan mengalami flicker/freeze.
+-   Ketika melakukan Delete Profile, baru bisa menghapus satu session aktif tidak seluruh session dari akun tersebut
+
+## Notes:
+
+-   Untuk masuk ke halaman selain Login dan Register, diharuskan **login terlebih dahulu**! Kalian bisa mendaftar akun baru atau menggunakan akun sementara di bawah:
+    -   **Email:** `kyota@fakhrif.my.id`
+    -   **Password:** `itskyota!`
+-   Berkaitan dengan bug nomor dua, jika itu terjadi silahkan lakukan penghapusan cookies untuk localhost:3000, lalu langsung lakukan login
+
 # Changelog v0.2a (28 Maret 2024)
 
 ## New:
