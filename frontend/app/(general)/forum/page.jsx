@@ -1,27 +1,53 @@
+'use client';
+
+import { LoadingModal } from "@/app/(general)/components/loading";
 import { format } from "date-fns";
 import Link from "next/link";
+import { useEffect, useState } from 'react';
 import { AiOutlineLike, AiOutlineMessage } from "react-icons/ai";
 
-export const metadata = {
-    title: "Forum",
-};
+// export const metadata = {
+//     title: "Forum",
+// };
 
-export default async function ForumThread({ params }) {
+export default  function ForumThread({ params }) {
+    const [forumData, setForumData] = useState([]);
+    const [loading, setLoading] = useState(false);
 
-    const response = await fetch("http://localhost:8000/api/forum", {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-        },
-    });
-
-    const data = await response.json();
+    useEffect(() => {
+        
+        const fetchData = async () => {
+            try {
+                // Start Loading
+                setLoading(true);
+                const res = await fetch('http://localhost:8000/api/forum');
+                const data = await res.json();
+                console.log('Forum Data:', data);
+    
+                for (let i = 0; i < data.length; i++) {
+                    const userId = data[i].user_id;
+                    const userRes = await fetch(`http://localhost:8000/api/users/${userId}`);
+                    const userData = await userRes.json();
+                    data[i].user = userData; //
+                }
+                setForumData(data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            } finally {
+                // Stop Loading
+                setLoading(false); 
+            }
+            
+        };
+    
+        fetchData();
+    }, []);
 
     
 
     return (
         <main className="py-8">
-            Hello
+
             <div className="max-w-7xl mx-auto px-6 space-y-3 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center space-x-1 mb-4">
                     <div className="flex space-x-2 ">
@@ -102,8 +128,8 @@ export default async function ForumThread({ params }) {
                         </li>
                     </ul>
                 </nav>
-
-                {data.map((thread) => (
+                {loading && <LoadingModal showModal={loading} />}
+                {forumData.map((thread) => (
                     
                     <div className="space-y-6" key={thread.id}>
                         <Link href={`/forum/${thread.id}`}>
@@ -113,7 +139,7 @@ export default async function ForumThread({ params }) {
                                         {thread.title}
                                     </h5>
                                     <p className="font-normal text-gray-6000">
-                                        By {thread.user_id}, {format(new Date(thread.created_at), 'MMMM dd, yyyy')}
+                                        By {thread.user?.name}, {format(new Date(thread.created_at), 'MMMM dd, yyyy')}
                                     </p>
                                 </div>
                                 <div className="flex items-center space-x-3">

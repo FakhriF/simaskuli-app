@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\ForumThread;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 
@@ -15,7 +16,9 @@ class ForumThreadController extends Controller
     public function index()
     {
         // Get all forum threads
-        return ForumThread::all();
+        return ForumThread::with('user')->get();
+
+        
     }
 
     /**
