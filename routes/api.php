@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ForumThreadController;
 use App\Http\Controllers\UserController;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -28,3 +29,6 @@ Route::delete('user', [UserController::class, 'deleteUser']);
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
 Route::delete('logout', [AuthController::class, 'logout']);
+
+// Forum
+Route::get('forum', [ForumThreadController::class, 'index']);
