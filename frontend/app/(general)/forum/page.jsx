@@ -70,10 +70,11 @@ export default async function ForumThread(){
           </nav>
           
 
-          <div className="space-y-6">
+          
 
 
           {data.map(thread => (
+            <div className="space-y-6">
               <Link key={thread.id} href={`/forum/${thread.id}`}>
                 <div className="block p-6 border border-black rounded-md shadow-md hover:bg-gray-100 flex items-end justify-between">
                   <div className="flex-grow">
@@ -93,6 +94,7 @@ export default async function ForumThread(){
                   </div>
                 </div>
               </Link>
+              </div>
             ))}
 
             <a href="#" class="block p-6 border border-black rounded-md shadow hover:bg-gray-100 flex items-end justify-between">
@@ -118,7 +120,7 @@ export default async function ForumThread(){
 
 
           </div>
-        </div>
+        
 
         
         
