@@ -1,4 +1,7 @@
+import { format } from "date-fns";
 import Link from "next/link";
+import { AiOutlineLike, AiOutlineMessage } from "react-icons/ai";
+
 export const metadata = {
     title: "Forum",
 };
@@ -13,6 +16,8 @@ export default async function ForumThread({ params }) {
     });
 
     const data = await response.json();
+
+    
 
     return (
         <main className="py-8">
@@ -99,6 +104,7 @@ export default async function ForumThread({ params }) {
                 </nav>
 
                 {data.map((thread) => (
+                    
                     <div className="space-y-6" key={thread.id}>
                         <Link href={`/forum/${thread.id}`}>
                             <div className="block p-6 border border-black rounded-md shadow-md hover:bg-gray-100 flex items-end justify-between">
@@ -107,18 +113,25 @@ export default async function ForumThread({ params }) {
                                         {thread.title}
                                     </h5>
                                     <p className="font-normal text-gray-6000">
-                                        By {thread.user_id}, {thread.created_date}
+                                        By {thread.user_id}, {format(new Date(thread.created_at), 'MMMM dd, yyyy')}
                                     </p>
                                 </div>
-                                <div className="flex items-center space-x-2">
-                                    Likes
+                                <div className="flex items-center space-x-3">
+                                    <div className="flex items-center space-x-1 hover:text-cyan-700">
+                                        <AiOutlineLike />
+                                        <span>Like</span>
+                                    </div>
+                                    <div className="flex items-center space-x-1">
+                                        <AiOutlineMessage />
+                                        <span>Views</span>
+                                    </div>
                                 </div>
                             </div>
                         </Link>
                     </div>
                 ))}
                 
-
+{/* 
                     <a
                         href="#"
                         className="block p-6 border border-black rounded-md shadow hover:bg-gray-100 flex items-end justify-between"
@@ -166,7 +179,7 @@ export default async function ForumThread({ params }) {
                                 99 views
                             </span>
                         </div>
-                    </a>
+                    </a> */}
                 
             </div>
         </main>
