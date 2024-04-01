@@ -2,16 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
+use App\Models\ForumThread;
 use Illuminate\Http\Request;
 
-class ForumController extends Controller
+
+class ForumThreadController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        // Get all forum threads
+        return ForumThread::all();
     }
 
     /**
@@ -19,7 +23,14 @@ class ForumController extends Controller
      */
     public function create()
     {
-        //
+        // create a new forum thread
+        $request = validate([
+            'title' => 'required',
+            'content' => 'required'
+        ]);
+
+        $thread = new ForumThread();
+
     }
 
     /**
@@ -35,7 +46,7 @@ class ForumController extends Controller
      */
     public function show(string $id)
     {
-        //
+
     }
 
     /**

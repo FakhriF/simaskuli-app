@@ -1,7 +1,11 @@
 
+'use client'
+ 
+import { useRouter } from 'next/navigation';
 
+export default function ForumPost() {
+    const router = useRouter();
 
-export default function ForumThread() {
     return (
         <main className="py-8">
             <div className="max-w-7xl mx-auto px-6 space-y-3 sm:px-6 lg:px-8">
