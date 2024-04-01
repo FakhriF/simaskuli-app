@@ -1,49 +1,24 @@
-'use client';
 
-import { LoadingModal } from "@/app/(general)/components/loading";
 import { format } from "date-fns";
 import Link from "next/link";
-import { useEffect, useState } from 'react';
 import { AiOutlineLike, AiOutlineMessage } from "react-icons/ai";
 
 // export const metadata = {
 //     title: "Forum",
 // };
 
-export default  function ForumThread({ params }) {
-    const [forumData, setForumData] = useState([]);
-    const [loading, setLoading] = useState(false);
+export default async function ForumThread({ params }) {
 
-    useEffect(() => {
-        
-        const fetchData = async () => {
-            try {
-                // Start Loading
-                setLoading(true);
-                const res = await fetch('http://localhost:8000/api/forum');
-                const data = await res.json();
-                console.log('Forum Data:', data);
-    
-                for (let i = 0; i < data.length; i++) {
-                    const userId = data[i].user_id;
-                    const userRes = await fetch(`http://localhost:8000/api/users/${userId}`);
-                    const userData = await userRes.json();
-                    data[i].user = userData; //
-                }
-                setForumData(data);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            } finally {
-                // Stop Loading
-                setLoading(false); 
-            }
-            
-        };
-    
-        fetchData();
-    }, []);
+    const res = await fetch('http://localhost:8000/api/forum');
+    const data = await res.json();
+    console.log('Forum Data:', data);
 
-    
+    for (let i = 0; i < data.length; i++) {
+        const userId = data[i].user_id;
+        const userRes = await fetch(`http://localhost:8000/api/users/${userId}`);
+        const userData = await userRes.json();
+        data[i].user = userData;
+    }
 
     return (
         <main className="py-8">
@@ -128,8 +103,7 @@ export default  function ForumThread({ params }) {
                         </li>
                     </ul>
                 </nav>
-                {loading && <LoadingModal showModal={loading} />}
-                {forumData.map((thread) => (
+                {data.map((thread) => (
                     
                     <div className="space-y-6" key={thread.id}>
                         <Link href={`/forum/${thread.id}`}>
