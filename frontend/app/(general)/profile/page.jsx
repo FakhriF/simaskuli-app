@@ -10,7 +10,7 @@ export const metadata = {
 };
 
 export default async function ProfilePage() {
-    const cookieStore = cookies();
+    // const cookieStore = cookies();
     // const hasCookie = cookieStore.has("token");
 
     // if (!hasCookie) {
@@ -20,7 +20,7 @@ export default async function ProfilePage() {
     // else {
     const token = await getToken();
 
-    console.log(token);
+    // console.log(token);
 
     const response = await fetch("http://localhost:8000/api/user", {
         method: "GET",
@@ -36,7 +36,7 @@ export default async function ProfilePage() {
 
     const data = await response.json();
 
-    console.log(data);
+    // console.log(data);
 
     return (
         <div>
