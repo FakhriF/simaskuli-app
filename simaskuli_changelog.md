@@ -4,13 +4,15 @@
 
 - Menambahkan halaman Connected Devices (`/profile/connected-devices`)
 - Dapat merubah data pengguna (Nama, BirthDate, Password)
-- Penggunaan library `react-icons` dan `react-toastify`
+- Penggunaan library `react-icons`, `react-toastify`, dan `date-fns`
+- Forum sudah terkoneksi dengan database
 
 ## Changes:
 
 - Perubahan struktur file pada folder `profile`
 - Mengubah Settings (`/profile/settings`) menjadi Change Password(`/profile/change-password`)
 - Mengubah nama Profile pada Side NavBar di `/profile` menjadi Edit Profile
+- Forum sudah dapat membaca dynamic link
 
 ## Bug Fixes:
 -   Ketika klik salah satu menu dropdown di navigation bar, maka menu akan tertutup langsung
