@@ -40,8 +40,10 @@ class UserController extends Controller
         if ($user_id) {
             ModelsUser::destroy($user_id);
 
+            (new \App\Http\Controllers\UserController())->deleteAllSessions($request);
+
             // call logout method in authController
-            (new \App\Http\Controllers\AuthController())->logout($request);
+            // (new \App\Http\Controllers\AuthController())->logout($request);
         } else {
             return response()->json([
                 'success' => false,
@@ -130,6 +132,43 @@ class UserController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'User not found',
+            ], 404);
+        }
+    }
+
+    public function checkSession(Request $request)
+    {
+
+        $token = $request->bearerToken();
+
+        $user_id = \App\Models\Session::where('payload', $token)->first()->user_id;
+
+        if ($user_id) {
+            return response()->json([
+                'success' => true
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+            ], 404);
+        }
+    }
+
+    public function deleteAllSessions(Request $request)
+    {
+
+        $token = $request->bearerToken();
+
+        $user_id = \App\Models\Session::where('payload', $token)->first()->user_id;
+
+        if ($user_id) {
+            $sessions = \App\Models\Session::where('user_id', $user_id)->delete();
+            return response()->json([
+                'success' => true
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false
             ], 404);
         }
     }
