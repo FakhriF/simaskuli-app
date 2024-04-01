@@ -34,7 +34,7 @@ export default function ProfileSection({ user }) {
     return (
         <div className="w-full p-4">
             <ToastContainer />
-            <h1 className="text-2xl font-bold mb-4">My Profile</h1>
+            <h1 className="text-2xl font-bold mb-4">Edit Profile</h1>
             <form className="space-y-4 mt-4">
                 <div className="space-y-2">
                     <label htmlFor="name">Name</label>

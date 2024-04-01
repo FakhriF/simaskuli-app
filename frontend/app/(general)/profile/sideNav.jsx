@@ -14,7 +14,7 @@ export default function SideNav() {
                             pathname === "/profile" && "text-blue-500"
                         }`}
                     >
-                        Profile
+                       Edit Profile
                     </Link>
                 </li>
                 <li>
