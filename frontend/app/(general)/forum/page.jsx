@@ -1,24 +1,8 @@
+import Thread from "./thread";
 
-import { format } from "date-fns";
-import Link from "next/link";
-import { AiOutlineLike, AiOutlineMessage } from "react-icons/ai";
+export default async function ForumThread() {
 
-// export const metadata = {
-//     title: "Forum",
-// };
-
-export default async function ForumThread({ params }) {
-
-    const res = await fetch('http://localhost:8000/api/forum');
-    const data = await res.json();
-    console.log('Forum Data:', data);
-
-    for (let i = 0; i < data.length; i++) {
-        const userId = data[i].user_id;
-        const userRes = await fetch(`http://localhost:8000/api/users/${userId}`);
-        const userData = await userRes.json();
-        data[i].user = userData;
-    }
+    
 
     return (
         <main className="py-8">
@@ -103,33 +87,9 @@ export default async function ForumThread({ params }) {
                         </li>
                     </ul>
                 </nav>
-                {data.map((thread) => (
-                    
-                    <div className="space-y-6" key={thread.id}>
-                        <Link href={`/forum/${thread.id}`}>
-                            <div className="block p-6 border border-black rounded-md shadow-md hover:bg-gray-100 flex items-end justify-between">
-                                <div className="flex-grow">
-                                    <h5 className="mb-2 text-xl font-bold">
-                                        {thread.title}
-                                    </h5>
-                                    <p className="font-normal text-gray-6000">
-                                        By {thread.user?.name}, {format(new Date(thread.created_at), 'MMMM dd, yyyy')}
-                                    </p>
-                                </div>
-                                <div className="flex items-center space-x-3">
-                                    <div className="flex items-center space-x-1 hover:text-cyan-700">
-                                        <AiOutlineLike />
-                                        <span>Like</span>
-                                    </div>
-                                    <div className="flex items-center space-x-1">
-                                        <AiOutlineMessage />
-                                        <span>Views</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </Link>
-                    </div>
-                ))}
+
+                <Thread />
+                
                 
 {/* 
                     <a
