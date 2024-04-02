@@ -14,5 +14,3 @@ export async function getToken() {
 export async function deleteToken() {
     cookies().delete("token");
 }
-
-// export const token = cookies().get("token").value;

@@ -1,3 +1,63 @@
+# [PLAN] Changelog v0.4a (2 Maret 2024)
+
+## New:
+
+- Menambahkan halaman Connected Devices (`/profile/connected-devices`)
+- Dapat merubah data pengguna (Nama, BirthDate, Password)
+- Penggunaan library `react-icons`, `react-toastify`, dan `date-fns`
+- Forum sudah terkoneksi dengan database
+- Halaman baru Course dapat diakses
+
+## Changes:
+
+- Perubahan struktur file pada folder `profile`
+- Mengubah Settings (`/profile/settings`) menjadi Change Password(`/profile/change-password`)
+- Mengubah nama Profile pada Side NavBar di `/profile` menjadi Edit Profile
+- Forum sudah dapat membaca dynamic link
+- Menambahkan akses ke halaman course via navigation bar
+
+## Bug Fixes:
+-   Ketika klik salah satu menu dropdown di navigation bar, maka menu akan tertutup langsung
+-   Ketika melakukan Delete Profile, sudah dapat menghapus seluruh token/sessions dari user tersebut
+-   Freeze/Flickering ketika masuk ke halaman website seharusnya sudah menghilang (Tetap terjadi jika tidak terkoneksi internet (lihat Notes))
+
+## Bug:
+
+-   **(NEW!)** Connected Devices masih berurut berdasarkan last activity sehingga perangkat yang digunakan bisa saja di posisi bawah
+-   Sedikit elemen mengalami inkonsistensi warna atau behaviour ketika dilakukan hovering
+
+## Notes:
+
+-   **PASTIKAN MELAKUKAN NPM INSTALL TERLEBIH DAHULU**
+-   **(NEW!)** Jika tidak terkoneksi internet dan sebelumnya sudah login, maka akan mengalami freeze, dan error always redirect. Hal ini dikarenakan aplikasi dijalankan dalam localhost.
+-   Untuk masuk ke halaman selain Login dan Register, diharuskan **login terlebih dahulu**! Kalian bisa mendaftar akun baru atau menggunakan akun sementara di bawah:
+    -   **Email:** `kyota@fakhrif.my.id`
+    -   **Password:** `itskyota!`
+
+# Changelog v0.3a (31 Maret 2024)
+
+## New:
+
+- Tambahan halaman baru yaitu Forum (/forum)
+
+## Changes:
+
+- Menambahkan link ke Forum dan Course (Masih #) pada Navigation Bar
+
+## Bug:
+
+-   **(NEW!)** Sedikit elemen mengalami inkonsistensi warna atau behaviour ketika dilakukan hovering
+-   **(NEW!)** Menu Profile pada Navigation Bar tidak tertutup ketika di klik
+-   Terkadang sesudah registrasi akan mengalami flicker/freeze.
+-   Ketika melakukan Delete Profile, baru bisa menghapus satu session aktif tidak seluruh session dari akun tersebut
+
+## Notes:
+
+-   Untuk masuk ke halaman selain Login dan Register, diharuskan **login terlebih dahulu**! Kalian bisa mendaftar akun baru atau menggunakan akun sementara di bawah:
+    -   **Email:** `kyota@fakhrif.my.id`
+    -   **Password:** `itskyota!`
+-   Berkaitan dengan bug nomor dua, jika itu terjadi silahkan lakukan penghapusan cookies untuk localhost:3000, lalu langsung lakukan login
+
 # Changelog v0.2a (28 Maret 2024)
 
 ## New:

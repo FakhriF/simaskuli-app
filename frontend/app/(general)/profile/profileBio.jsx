@@ -1,11 +1,6 @@
-"use client";
-
 import Link from "next/link";
 import ProfileElement from "./profileElement";
 import { useRouter } from "next/navigation";
-import axios from "axios";
-
-import { useEffect, useState } from "react";
 
 export default function ProfileBioElement({ user }) {
     const userData = {
@@ -17,9 +12,7 @@ export default function ProfileBioElement({ user }) {
         <div className="flex flex-col items-center min-h-screen">
             <div className="bg-gray-100 p-8 w-full">
                 <div className="max-w-5xl mx-auto">
-                    <h1 className="text-3xl font-bold">
-                        Hai, {userData.name}!
-                    </h1>
+                    <h1 className="text-3xl font-bold">Hi, {userData.name}!</h1>
                     <p className="text-gray-500">{userData.email}</p>
                 </div>
             </div>

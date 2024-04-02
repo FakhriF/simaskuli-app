@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 export function middleware(request) {
     // console.log(request.nextUrl.pathname);
 
-    if (request.nextUrl.pathname.startsWith("/profile/settings")) {
+    if (request.nextUrl.pathname.startsWith("/profile/change-password")) {
         return NextResponse.rewrite(new URL("/profile", request.url));
     }
 
@@ -12,6 +12,10 @@ export function middleware(request) {
     }
 
     if (request.nextUrl.pathname.startsWith("/profile/delete")) {
+        return NextResponse.rewrite(new URL("/profile", request.url));
+    }
+
+    if (request.nextUrl.pathname.startsWith("/profile/connected-devices")) {
         return NextResponse.rewrite(new URL("/profile", request.url));
     }
 }
