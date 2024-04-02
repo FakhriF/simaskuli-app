@@ -6,7 +6,7 @@
 - Dapat merubah data pengguna (Nama, BirthDate, Password)
 - Penggunaan library `react-icons`, `react-toastify`, dan `date-fns`
 - Forum sudah terkoneksi dengan database
-- Halaman baru Course dapat diakses
+- Halaman baru Course dan Gradebook dapat diakses
 
 ## Changes:
 
