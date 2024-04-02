@@ -1,4 +1,4 @@
-# [PLAN] Changelog v0.4a (2 Maret 2024)
+# Changelog v0.4a (2 Maret 2024)
 
 ## New:
 
