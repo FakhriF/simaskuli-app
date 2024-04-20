@@ -4,6 +4,7 @@ import { formatDistanceToNow, parseISO } from 'date-fns';
 import { useRouter } from 'next/navigation'; // corrected import
 import { useEffect, useState } from 'react';
 import { MdPerson, MdReply, MdThumbUp } from 'react-icons/md';
+import WriteReply from './WriteReply';
 
 export default function ForumPost({ params }) {
     const router = useRouter();
@@ -72,6 +73,7 @@ export default function ForumPost({ params }) {
                     <p className="text-center text-gray-500">Loading...</p>
                 )}
             </div>
+            <WriteReply forumPostId={id} />
         </main>
     );
 }
