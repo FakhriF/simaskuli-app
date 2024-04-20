@@ -1,4 +1,3 @@
-import ForumPagination from "./forumPagination";
 import Thread from "./thread";
 
 export default function ForumThread() {
@@ -26,7 +25,6 @@ export default function ForumThread() {
 
                 <h1 className="text-3xl font-bold">Forum</h1>
 
-                <ForumPagination />
 
                 <Thread />
 
