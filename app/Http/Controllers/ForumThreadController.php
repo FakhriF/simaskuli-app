@@ -16,7 +16,7 @@ class ForumThreadController extends Controller
      */
     public function index()
     {
-        $perPage = 5; 
+        $perPage = 2; 
         $threads = ForumThread::with('user')->paginate($perPage);
 
         return response()->json([

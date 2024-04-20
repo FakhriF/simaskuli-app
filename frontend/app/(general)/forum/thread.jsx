@@ -16,6 +16,7 @@ export default function ForumThread() {
       const fetchData = async () => {
         try {
             setLoading(true);
+            
             const [forumRes, usersRes] = await Promise.all([
             fetch(`http://localhost:8000/api/forum?page=${currentPage}`),
             fetch(`http://localhost:8000/api/users`)
