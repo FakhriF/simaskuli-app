@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\ForumThread;
+use App\Models\Thread;
 use App\Models\User;
 use App\Models\Session;
 
 
-class ForumThreadController extends Controller
+class ThreadController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +17,7 @@ class ForumThreadController extends Controller
     public function index()
     {
         $perPage = 2; 
-        $threads = ForumThread::with('user')->paginate($perPage);
+        $threads = Thread::with('user')->paginate($perPage);
 
         return response()->json([
         'data' => $threads->items(),
@@ -32,7 +32,7 @@ class ForumThreadController extends Controller
     public function getForumThread(string $id)
     {
         // Get the forum thread with the specified ID
-        $thread = ForumThread::with('user')->find($id);
+        $thread = Thread::with('user')->find($id);
         
         // Make sure the forum thread exists
         if (!$thread) {
@@ -64,7 +64,7 @@ class ForumThreadController extends Controller
         }
         
         // Create a new forum thread
-        $thread = new ForumThread();
+        $thread = new Thread();
         $thread->title = $request->input('title');
         $thread->content = $request->input('content');
         $thread->user_id = $user_id;

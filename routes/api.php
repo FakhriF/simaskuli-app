@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ForumThreadController;
+use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\UserController;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -31,6 +31,6 @@ Route::post('register', [AuthController::class, 'register']);
 Route::delete('logout', [AuthController::class, 'logout']);
 
 // Forum
-Route::get('forum', [ForumThreadController::class, 'index']);
-Route::get('forum/{id}', [ForumThreadController::class, 'getForumThread']);
-Route::post('forum', [ForumThreadController::class, 'store']);
+Route::get('forum', [ThreadController::class, 'index']);
+Route::get('forum/{id}', [ThreadController::class, 'getForumThread']);
+Route::post('forum', [ThreadController::class, 'store']);
