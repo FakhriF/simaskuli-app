@@ -1,9 +1,6 @@
-import Link from "next/link";
-import ProfileElement from "./profileElement";
-import ProfileBioElement from "./profileBio";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { getToken, token } from "../actions";
+import { getToken } from "../actions";
+import ProfileBioElement from "./profileBio";
 
 export const metadata = {
     title: "Profile",

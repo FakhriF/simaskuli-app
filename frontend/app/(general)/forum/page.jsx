@@ -1,4 +1,3 @@
-import CreateThread from "./forumCreateThread";
 import ForumPagination from "./forumPagination";
 import Thread from "./thread";
 
@@ -31,7 +30,7 @@ export default function ForumThread() {
 
                 <Thread />
 
-                < CreateThread />
+                {/* <CreateThread /> */}
 
             </div>
         </main>

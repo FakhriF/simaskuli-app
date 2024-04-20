@@ -45,52 +45,26 @@ class ForumThreadController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-
     public function store(Request $request)
     {
-        try {
-            // Validate the request data (you can add more validation rules as needed)
-            $validatedData = $request->validate([
-                'title' => 'required|string|max:255',
-                'content' => 'required|string',
-            ]);
-    
-            // Take the request (which is token)
-            $token = $request->bearerToken();
-    
-            // Make sure the token exists
-            if (!$token) {
-                return response()->json(['error' => 'Invalid session token.'], 401);
-            }
-    
-            // Get the session corresponding to the token
-            $session = Session::where('payload', $token)->first();
-    
-            // Make sure the session exists
-            if (!$session) {
-                return response()->json(['error' => 'Invalid session token.'], 401);
-            }
-    
-            // Get the user id from the session
-            $user_id = $session->user_id;
-    
-            // Create a new forum thread with the received data and the user's ID
-            $thread = new ForumThread();
-            $thread->title = $validatedData['title'];
-            $thread->content = $validatedData['content'];
-            $thread->user_id = $user_id;
-            $thread->save();
-    
-            // Optionally, return a response indicating success
-            return response()->json(['message' => 'Forum thread created successfully'], 201);
-        } catch (QueryException $e) {
-            // Log the error
-            \Log::error($e);
-            
-            // Return a response indicating the failure
-            return response()->json(['error' => 'An error occurred while creating the forum thread.'], 500);
+        // Get the user ID from the request
+        $user_id = $request->input('user_id');
+        
+        $user = User::find($user_id);
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
         }
+        
+        // Create a new forum thread
+        $thread = new ForumThread();
+        $thread->title = $request->input('title');
+        $thread->content = $request->input('content');
+        $thread->user_id = $user_id;
+        $thread->save();
+        
+        return response()->json($thread, 201);
     }
+    
     
 
     /**
