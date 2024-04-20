@@ -1,4 +1,4 @@
-import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
 export const metadata = {
     title: "Forum Pagination",
@@ -7,7 +7,6 @@ export const metadata = {
 export default function ForumPagination() {
     return (
         <>
-           { /* Move the pagination component to the top of the page
             <nav aria-label="pagination" className="mx-auto flex justify-center" role="navigation">
                 <ul className="flex items-center gap-1">
                     <li>
@@ -31,8 +30,8 @@ export default function ForumPagination() {
                     </li>
                 </ul>
             </nav>
-            */ }
-            <nav aria-label="Page navigation example">
+
+            {/* <nav aria-label="Page navigation example">
             <ul className="flex items-center space-x-2">
                 <li>
                 <div className="flex items-center justify-center px-3 h-8 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-100">
@@ -58,7 +57,7 @@ export default function ForumPagination() {
                 </div>
                 </li>
             </ul>
-        </nav>
+        </nav> */}
         </>
     )
 }

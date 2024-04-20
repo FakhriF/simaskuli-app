@@ -16,8 +16,16 @@ class ForumThreadController extends Controller
      */
     public function index()
     {
-        // Get all forum threads
-        return ForumThread::with('user')->get();
+        $perPage = 5; 
+        $threads = ForumThread::with('user')->paginate($perPage);
+
+        return response()->json([
+        'data' => $threads->items(),
+        'meta' => [
+            'current_page' => $threads->currentPage(),
+            'total_pages' => $threads->lastPage(),
+        ],
+    ]);
         
     }
 
