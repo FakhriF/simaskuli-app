@@ -35,7 +35,7 @@ Route::delete('logout', [AuthController::class, 'logout']);
 Route::get('forum', [ThreadController::class, 'index']);
 Route::get('forum/{id}', [ThreadController::class, 'getForumThread']);
 Route::post('forum', [ThreadController::class, 'store']);
-
+Route::delete('forum/{id}', [ThreadController::class, 'destroy']);
 
 // Thread Post
 Route::get('forum/posts', [ThreadPostController::class, 'index']);

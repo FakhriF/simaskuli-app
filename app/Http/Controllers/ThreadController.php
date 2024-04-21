@@ -103,6 +103,13 @@ class ThreadController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // Delete Thread
+        $thread = Thread::find($id);
+        if (!$thread) {
+            return response()->json(['error' => 'Thread not found'], 404);
+        }
+
+        $thread->delete();
+        
     }
 }

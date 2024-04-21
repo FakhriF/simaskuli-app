@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import ForumPagination from './ForumPagination';
 import ThreadCard from './ThreadCard';
 
-export default function ForumThread() {
+export default function ForumThread( { user } ) {
     const [threads, setThreads] = useState([]);
     const [userData, setUserData] = useState({}); 
     const [currentPage, setCurrentPage] = useState(1);
@@ -61,7 +61,7 @@ export default function ForumThread() {
         <ForumPagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
         <div className="space-y-6">
           {threads.map((thread) => (
-            <ThreadCard key={thread.id} thread={thread} />
+            <ThreadCard key={thread.id} thread={thread} userData={user} />
           ))}
         </div>
       </div>

@@ -1,8 +1,35 @@
 import { format } from 'date-fns';
 import Link from 'next/link';
-import { AiOutlineLike, AiOutlineMessage } from 'react-icons/ai';
+import { useRouter } from 'next/router'; // Changed from 'next/navigation'
+import { AiOutlineDelete, AiOutlineLike } from 'react-icons/ai';
 
-export default function ThreadCard({ thread }) {
+export default function ThreadCard({ thread, userData }) {
+  const loggedInUserId = userData.id; 
+  const isCreatedByLoggedInUser = thread.user_id === loggedInUserId;
+
+  const router = useRouter();
+
+  console.log("isCreatedByLoggedInUser:", isCreatedByLoggedInUser);
+
+  const handleDelete = async () => { 
+    // e.preventDefault();
+    // e.stopPropagation();
+    // try {
+    //   const response = await fetch(`http://localhost:8000/api/forum/${thread.id}`, {
+    //     method: 'DELETE',
+    //   });
+
+    //   if (response.status === 200) {
+    //     console.log('Thread deleted successfully');
+    //     router.push("/forum");
+    //   } else {
+    //     console.error(response.data.message);
+    //   }
+    // } catch (error) {
+    //   console.error('Error deleting thread:', error);
+    // }
+  };
+
   return (
     <Link href={`/forum/${thread.id}`} key={thread.id}>
       <div className="block p-6 border border-gray-200 rounded-lg shadow-md hover:bg-gray-100 flex items-end justify-between transition duration-200 ease-in-out transform hover:-translate-y-1">
@@ -21,10 +48,13 @@ export default function ThreadCard({ thread }) {
             <span>Like</span>
           </div>
 
-          <div className="flex items-center space-x-1 text-gray-500">
-            <AiOutlineMessage className="w-5 h-5"/>
-            <span>Views</span>
-          </div>
+          {thread.user_id === loggedInUserId && (
+            <div className="flex items-center space-x-1 text-gray-500 hover:text-red-500 transition duration-200 ease-in-out">
+              <AiOutlineDelete className="w-5 h-5" onClick={handleDelete()} />
+              <span>Delete</span>
+            </div>
+          )}
+
         </div>
       </div>
     </Link>

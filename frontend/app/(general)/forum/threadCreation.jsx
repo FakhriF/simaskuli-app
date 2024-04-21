@@ -1,32 +1,15 @@
-'use client'
-
 import { useState } from "react";
-import { getToken } from "../actions";
 import ThreadCreationForm from "./threadCreationForm";
 
 export const metadata = {
     title: "Create Forum Thread",
 };
 
-export default function ThreadCreation() {
+export default function ThreadCreation({ user }) {
     const [showForm, setShowForm] = useState(false);
-    const [userData, setUserData] = useState({});
 
     const handleClick = async () => {
         setShowForm(true);
-        
-        const token = await getToken();
-
-        const response = await fetch("http://localhost:8000/api/user", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-            },
-        });
-
-        const userData = await response.json();
-        setUserData(userData); 
     };
 
     return (
@@ -37,7 +20,7 @@ export default function ThreadCreation() {
             >
                 Create New Thread
             </button>
-            {showForm && <ThreadCreationForm user={userData} onCancel={() => setShowForm(false)} />}
+            {showForm && <ThreadCreationForm user={user} onCancel={() => setShowForm(false)} />}
         </div>
     );
 }
