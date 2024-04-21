@@ -18,6 +18,13 @@ class ThreadPostController extends Controller
         return response()->json($threadPosts, 200);
     }
 
+    public function getPostsByThreadId(string $threadId)
+    {
+        $threadPosts = ThreadPost::with('thread', 'user')->where('thread_id', $threadId)->get();
+
+        return response()->json($threadPosts, 200);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
