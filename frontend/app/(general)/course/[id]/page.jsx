@@ -1,4 +1,10 @@
+
+'use client'
+ 
+import { useRouter } from 'next/navigation';
+
 export default function CoursePage() {
+  const router = useRouter();
   return (
     <div className="w-full p-4 mb-8">
       
