@@ -1,24 +1,28 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Http\Controllers\Controller;
-use App\Models\ForumThread;
+use App\Models\Thread;
 use App\Models\User;
+use App\Models\ThreadPost;
 use Illuminate\Http\Request;
 
-
-class ForumThreadController extends Controller
+class ThreadPostController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        // Get all forum threads
-        return ForumThread::with('user')->get();
+        $threadPosts = ThreadPost::with('thread', 'user')->get();
 
-        
+        return response()->json($threadPosts, 200);
+    }
+
+    public function getPostsByThreadId(string $threadId)
+    {
+        $threadPosts = ThreadPost::with('thread', 'user')->where('thread_id', $threadId)->get();
+
+        return response()->json($threadPosts, 200);
     }
 
     /**
@@ -26,14 +30,7 @@ class ForumThreadController extends Controller
      */
     public function create()
     {
-        // create a new forum thread
-        $request = validate([
-            'title' => 'required',
-            'content' => 'required'
-        ]);
-
-        $thread = new ForumThread();
-
+        //
     }
 
     /**
@@ -41,7 +38,13 @@ class ForumThreadController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $threadPost = new ThreadPost();
+        $threadPost->thread_id = $request->thread_id;
+        $threadPost->user_id = $request->user_id;
+        $threadPost->content = $request->content;
+        $threadPost->save();
+
+        return response()->json($threadPost, 201);
     }
 
     /**
@@ -49,7 +52,7 @@ class ForumThreadController extends Controller
      */
     public function show(string $id)
     {
-
+        //
     }
 
     /**
