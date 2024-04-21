@@ -1,9 +1,12 @@
 'use client';
 
 import axios from "axios";
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 export default function WriteReply({ thread, user, id }) {
+
+    const router = useRouter();
 
     const [reply, setReply] = useState('');
 
@@ -22,6 +25,8 @@ export default function WriteReply({ thread, user, id }) {
             );
             if (response.status === 201) {
                 console.log('Reply submitted successfully');
+                router.push(`/forum/${id}`);
+                setReply('');
             } else {
                 console.error(response.data.message);
             }
@@ -31,22 +36,20 @@ export default function WriteReply({ thread, user, id }) {
     }
 
     return (
-        <div className="py-8">
-            <form className="bg-white shadow-md rounded-lg py-4" autoComplete="off" onSubmit={handleSubmit}>
-                <h1 className="text-2xl font-semibold mb-4">Write Reply</h1>
-                <div className="mb-4">
-                    <label htmlFor="reply" className="block mb-2">Reply</label> {/* Added htmlFor attribute */}
-                    <textarea
-                        id="reply"
-                        className="w-full px-4 py-2 border rounded-lg"
-                        value={reply}
-                        onChange={(e) => setReply(e.target.value)}
-                        required
-                    ></textarea>
+        <div className="max-w-2xl bg-white rounded-lg border p-2 mx-auto mt-20">
+            <form className="px-3 mb-2 mt-2" autoComplete="off" onSubmit={handleSubmit}>
+                <textarea
+                    placeholder="Reply"
+                    className="w-full bg-gray-100 rounded border border-gray-400 leading-normal resize-none h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"
+                    value={reply}
+                    onChange={(e) => setReply(e.target.value)}
+                    required
+                ></textarea>
+                <div className="flex justify-end px-4 mt-2">
+                    <button type="submit" className="px-2.5 py-1.5 rounded-md text-white text-sm bg-blue-500 hover:bg-blue-600">
+                        Submit Reply
+                    </button>
                 </div>
-                <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
-                    Submit Reply
-                </button>
             </form>
         </div>
     );

@@ -14,7 +14,7 @@ export default function ThreadCreation() {
 
     const handleClick = async () => {
         setShowForm(true);
-
+        
         const token = await getToken();
 
         const response = await fetch("http://localhost:8000/api/user", {
@@ -26,13 +26,13 @@ export default function ThreadCreation() {
         });
 
         const userData = await response.json();
-        setUserData(userData);
+        setUserData(userData); 
     };
 
     return (
         <div>
-            <button
-                className="text-white bg-blue-500 border border-gray-300 rounded-md px-3 py-2 hover:bg-blue-300"
+            <button  
+                className="text-white bg-blue-500 border border-gray-300 rounded-md px-3 py-2 hover:bg-blue-300" 
                 onClick={handleClick}
             >
                 Create New Thread
@@ -41,4 +41,3 @@ export default function ThreadCreation() {
         </div>
     );
 }
-

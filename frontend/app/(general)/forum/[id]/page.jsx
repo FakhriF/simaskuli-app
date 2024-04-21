@@ -63,6 +63,7 @@ export default function ForumPost({ params }) {
     return (
         <main className="py-8">
             <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 className="text-lg font-medium mb-4">{forumPost && forumPost.title}</h2>
                 {forumPost ? (
                     <OriginalPost forumPost={forumPost} formattedDate={formattedDate} />
                 ) : (

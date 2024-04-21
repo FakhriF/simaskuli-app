@@ -16,7 +16,7 @@ class ThreadController extends Controller
      */
     public function index()
     {
-        $perPage = 2; 
+        $perPage = 5; 
         $threads = Thread::with('user')->paginate($perPage);
 
         return response()->json([

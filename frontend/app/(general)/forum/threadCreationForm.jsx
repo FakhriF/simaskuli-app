@@ -29,17 +29,11 @@ export default function ThreadCreationForm({ user, onCancel }) {
             } else {
                 setError(response.data.message);
             }
-            setSubmitted(true); // Update state to indicate form submission
+            setSubmitted(true); 
         } catch (error) {
             setError(error.response.data.message);
         }
     };
-
-    const handleCancel = () => {
-        // Set the cancelled state to true to hide the form
-        setCancelled(true);
-    };
-
     // If form is submitted or cancelled, return null to hide the form
     if (submitted) {
         return null;

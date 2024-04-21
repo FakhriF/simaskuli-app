@@ -2,6 +2,7 @@ import { MdPerson, MdReply, MdThumbUp } from 'react-icons/md';
 
 export default function OriginalPost({ forumPost, formattedDate }) {
     return (
+        <>
         <div className="bg-white shadow-md rounded-lg p-6">
             <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center">
@@ -27,5 +28,7 @@ export default function OriginalPost({ forumPost, formattedDate }) {
                 </button>
             </div>
         </div>
+        </>
     );
+
 }

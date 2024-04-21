@@ -11,9 +11,10 @@ export default function Reply({ reply }) {
                     </div>
                     <div>
                         <h3 className="text-base font-medium text-gray-900">{reply.user.name}</h3>
-                        <p className="text-sm text-gray-600">{formatDistanceToNow(parseISO(reply.created_at))} ago</p>
+                        <p className="text-sm text-gray-600">{reply.user.role}</p>
                     </div>
                 </div>
+                <p className="text-sm text-gray-600">{formatDistanceToNow(parseISO(reply.created_at))} ago</p>
             </div>
             <p className="text-sm text-gray-700">{reply.content}</p>
         </div>
