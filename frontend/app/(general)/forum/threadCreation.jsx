@@ -9,11 +9,12 @@ export const metadata = {
 };
 
 export default function ThreadCreation() {
-    const [showForm, setShowForm] = useState(false); // State to track whether to show the form or not
-    const [userData, setUserData] = useState({}); // Initialize userData as an empty object
+    const [showForm, setShowForm] = useState(false);
+    const [userData, setUserData] = useState({});
 
     const handleClick = async () => {
-        setShowForm(true); // Show the form immediately
+        setShowForm(true);
+
         const token = await getToken();
 
         const response = await fetch("http://localhost:8000/api/user", {
@@ -25,20 +26,18 @@ export default function ThreadCreation() {
         });
 
         const userData = await response.json();
-        setUserData(userData); 
+        setUserData(userData);
     };
 
     return (
         <div>
-            {!showForm && (
-                <button  
-                    className="text-white bg-blue-500 border border-gray-300 rounded-md px-3 py-2 hover:bg-blue-300" 
-                    onClick={handleClick}
-                    >
-                    Create New Thread
-                </button>
-            )}
-            {showForm && <ThreadCreationForm user={userData} />}
+            <button
+                className="text-white bg-blue-500 border border-gray-300 rounded-md px-3 py-2 hover:bg-blue-300"
+                onClick={handleClick}
+            >
+                Create New Thread
+            </button>
+            {showForm && <ThreadCreationForm user={userData} onCancel={() => setShowForm(false)} />}
         </div>
     );
 }

@@ -4,11 +4,11 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export default function ThreadCreationForm({ user }) {
+export default function ThreadCreationForm({ user, onCancel }) {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [error, setError] = useState("");
-    const [submitted, setSubmitted] = useState(false); // State to track if form is submitted
+    const [submitted, setSubmitted] = useState(false); 
 
     const router = useRouter();
 
@@ -35,7 +35,12 @@ export default function ThreadCreationForm({ user }) {
         }
     };
 
-    // If form is submitted, return null to hide the form
+    const handleCancel = () => {
+        // Set the cancelled state to true to hide the form
+        setCancelled(true);
+    };
+
+    // If form is submitted or cancelled, return null to hide the form
     if (submitted) {
         return null;
     }
@@ -66,9 +71,14 @@ export default function ThreadCreationForm({ user }) {
                     required
                 ></textarea>
             </div>
-            <button className="bg-blue-500 text-white py-2 px-4 rounded-lg w-full hover:bg-blue-600">
-                Create Thread
-            </button>
+            <div className="flex justify-between">
+                <button className="bg-blue-500 text-white py-2 px-4 rounded-lg w-full mr-2 hover:bg-blue-600">
+                    Create Thread
+                </button>
+                <button type="button" className="bg-gray-500 text-white py-2 px-4 rounded-lg w-full ml-2 hover:bg-gray-600" onClick={onCancel}>
+                    Cancel
+                </button>
+            </div>
         </form>
     );
 }
