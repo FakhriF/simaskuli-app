@@ -55,7 +55,6 @@ class ThreadController extends Controller
      */
     public function store(Request $request)
     {
-        // Get the user ID from the request
         $user_id = $request->input('user_id');
         
         $user = User::find($user_id);

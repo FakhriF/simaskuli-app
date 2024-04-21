@@ -39,3 +39,4 @@ Route::post('forum', [ThreadController::class, 'store']);
 
 // Thread Post
 Route::get('forum/{id}/posts', [ThreadPostController::class, 'index']);
+Route::post('forum/{id}/posts', [ThreadPostController::class, 'store']);

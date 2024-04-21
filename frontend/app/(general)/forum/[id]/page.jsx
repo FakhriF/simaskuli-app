@@ -1,32 +1,53 @@
 'use client';
 
+// Import other necessary modules
+import { getToken } from '@/app/(general)/actions';
 import { formatDistanceToNow, parseISO } from 'date-fns';
-import { useRouter } from 'next/navigation'; // corrected import
 import { useEffect, useState } from 'react';
 import { MdPerson, MdReply, MdThumbUp } from 'react-icons/md';
 import WriteReply from './WriteReply';
 
 export default function ForumPost({ params }) {
-    const router = useRouter();
-    const { id } = params;
     const [forumPost, setForumPost] = useState(null);
     const [formattedDate, setFormattedDate] = useState('');
+    const [userData, setUserData] = useState(null);
+    const [replies, setReplies] = useState([]);
 
     useEffect(() => {
-        const fetchForumPostData = async () => {
+        const fetchData = async () => {
             try {
-                const res = await fetch(`http://localhost:8000/api/forum/${id}`);
-                const data = await res.json();
-                setForumPost(data);
+                const [forumPostRes, userRes, repliesRes] = await Promise.all([
+                    fetch(`http://localhost:8000/api/forum/${params.id}`),
+                    getToken().then(token =>
+                        fetch("http://localhost:8000/api/user", {
+                            method: "GET",
+                            headers: {
+                                "Content-Type": "application/json",
+                                Authorization: `Bearer ${token}`,
+                            },
+                        })
+                    ),
+                    fetch(`http://localhost:8000/api/forum/${params.id}/posts`)
+                ]);
+
+                const [forumPostData, userData, repliesData] = await Promise.all([
+                    forumPostRes.json(),
+                    userRes.json(),
+                    repliesRes.json()
+                ]);
+
+                setForumPost(forumPostData);
+                setUserData(userData);
+                setReplies(repliesData);
             } catch (error) {
-                console.error('Error fetching forum post data:', error);
+                console.error('Error fetching data:', error);
             }
         };
 
-        fetchForumPostData();
-    }, [id]);
+        fetchData();
+    }, [params.id]);
 
-    useEffect(() => { // corrected useEffect hook
+    useEffect(() => {
         if (forumPost && forumPost.updated_at) {
             const date = parseISO(forumPost.updated_at);
             const timeDiff = formatDistanceToNow(date);
@@ -42,8 +63,8 @@ export default function ForumPost({ params }) {
         <main className="py-8">
             <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
                 {forumPost ? (
-                    <div className="block border border-black p-6 rounded-lg shadow-md">
-                        <div className="flex items-center justify-between">
+                    <div className="bg-white shadow-md rounded-lg p-6">
+                        <div className="flex items-center justify-between mb-4">
                             <div className="flex items-center">
                                 <div className="bg-blue-500 rounded-full p-2 mr-3">
                                     <MdPerson size={24} color="#FFF" />
@@ -55,9 +76,7 @@ export default function ForumPost({ params }) {
                             </div>
                             <p className="text-sm text-gray-600">{formattedDate}</p>
                         </div>
-                        <div className="mt-4">
-                            <p className="text-base text-gray-700">{forumPost.content}</p>
-                        </div>
+                        <p className="text-base text-gray-700">{forumPost.content}</p>
                         <div className="flex justify-end mt-4">
                             <button className="flex items-center text-sm text-blue-500 hover:text-blue-600 mr-4">
                                 <MdThumbUp size={20} className="mr-1" />
@@ -72,8 +91,30 @@ export default function ForumPost({ params }) {
                 ) : (
                     <p className="text-center text-gray-500">Loading...</p>
                 )}
+                {replies.length > 0 && (
+                    <div className="mt-8">
+                        <h2 className="text-lg font-medium mb-4">Replies</h2>
+                        {replies.map(reply => (
+                            <div key={reply.id} className="bg-white shadow-md rounded-lg p-4 mb-4">
+                                <div className="flex items-center justify-between mb-2">
+                                    <div className="flex items-center">
+                                        <div className="bg-blue-500 rounded-full p-2 mr-3">
+                                            <MdPerson size={20} color="#FFF" />
+                                        </div>
+                                        <div>
+                                            <h3 className="text-base font-medium text-gray-900">{reply.user.name}</h3>
+                                            <p className="text-sm text-gray-600">{formatDistanceToNow(parseISO(reply.created_at))} ago</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p className="text-sm text-gray-700">{reply.content}</p>
+                            </div>
+                        ))}
+                    </div>
+                )}
+                <WriteReply thread={forumPost} user={userData} id={params.id} />
             </div>
-            <WriteReply forumPostId={id} />
+            
         </main>
     );
 }

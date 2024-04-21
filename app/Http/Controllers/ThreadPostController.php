@@ -14,6 +14,8 @@ class ThreadPostController extends Controller
     public function index()
     {
         $threadPosts = ThreadPost::with('thread', 'user')->get();
+
+        return response()->json($threadPosts, 200);
     }
 
     /**
@@ -29,7 +31,13 @@ class ThreadPostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $threadPost = new ThreadPost();
+        $threadPost->thread_id = $request->thread_id;
+        $threadPost->user_id = $request->user_id;
+        $threadPost->content = $request->content;
+        $threadPost->save();
+
+        return response()->json($threadPost, 201);
     }
 
     /**
