@@ -4,8 +4,9 @@
 import { getToken } from '@/app/(general)/actions';
 import { formatDistanceToNow, parseISO } from 'date-fns';
 import { useEffect, useState } from 'react';
-import { MdPerson, MdReply, MdThumbUp } from 'react-icons/md';
+import Reply from './Reply';
 import WriteReply from './WriteReply';
+import OriginalPost from './originalPost';
 
 export default function ForumPost({ params }) {
     const [forumPost, setForumPost] = useState(null);
@@ -63,31 +64,7 @@ export default function ForumPost({ params }) {
         <main className="py-8">
             <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
                 {forumPost ? (
-                    <div className="bg-white shadow-md rounded-lg p-6">
-                        <div className="flex items-center justify-between mb-4">
-                            <div className="flex items-center">
-                                <div className="bg-blue-500 rounded-full p-2 mr-3">
-                                    <MdPerson size={24} color="#FFF" />
-                                </div>
-                                <div>
-                                    <h2 className="text-lg font-medium text-gray-900">{forumPost.user.name}</h2>
-                                    <p className="text-sm text-gray-600">{forumPost.user.role}</p>
-                                </div>
-                            </div>
-                            <p className="text-sm text-gray-600">{formattedDate}</p>
-                        </div>
-                        <p className="text-base text-gray-700">{forumPost.content}</p>
-                        <div className="flex justify-end mt-4">
-                            <button className="flex items-center text-sm text-blue-500 hover:text-blue-600 mr-4">
-                                <MdThumbUp size={20} className="mr-1" />
-                                Like
-                            </button>
-                            <button className="flex items-center text-sm text-blue-500 hover:text-blue-600">
-                                <MdReply size={20} className="mr-1" />
-                                Reply
-                            </button>
-                        </div>
-                    </div>
+                    <OriginalPost forumPost={forumPost} formattedDate={formattedDate} />
                 ) : (
                     <p className="text-center text-gray-500">Loading...</p>
                 )}
@@ -95,26 +72,12 @@ export default function ForumPost({ params }) {
                     <div className="mt-8">
                         <h2 className="text-lg font-medium mb-4">Replies</h2>
                         {replies.map(reply => (
-                            <div key={reply.id} className="bg-white shadow-md rounded-lg p-4 mb-4">
-                                <div className="flex items-center justify-between mb-2">
-                                    <div className="flex items-center">
-                                        <div className="bg-blue-500 rounded-full p-2 mr-3">
-                                            <MdPerson size={20} color="#FFF" />
-                                        </div>
-                                        <div>
-                                            <h3 className="text-base font-medium text-gray-900">{reply.user.name}</h3>
-                                            <p className="text-sm text-gray-600">{formatDistanceToNow(parseISO(reply.created_at))} ago</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <p className="text-sm text-gray-700">{reply.content}</p>
-                            </div>
+                            <Reply key={reply.id} reply={reply} />
                         ))}
                     </div>
                 )}
                 <WriteReply thread={forumPost} user={userData} id={params.id} />
             </div>
-            
         </main>
     );
 }
