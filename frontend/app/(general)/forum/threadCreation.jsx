@@ -8,7 +8,7 @@ export const metadata = {
     title: "Create Forum Thread",
 };
 
-export default function CreateThread() {
+export default function ThreadCreation() {
     const [showForm, setShowForm] = useState(false); // State to track whether to show the form or not
     const [userData, setUserData] = useState({}); // Initialize userData as an empty object
 
@@ -25,7 +25,7 @@ export default function CreateThread() {
         });
 
         const userData = await response.json();
-        setUserData(userData); // Set user data
+        setUserData(userData); 
     };
 
     return (

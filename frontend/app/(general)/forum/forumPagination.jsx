@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-export default function Pagination({ currentPage, totalPages, onPageChange }) {
+export default function ForumPagination({ currentPage, totalPages, onPageChange }) {
     const router = useRouter();
   
     const handlePageClick = (page) => {

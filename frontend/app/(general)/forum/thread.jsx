@@ -2,8 +2,8 @@
 
 import { LoadingModal } from "@/app/(general)/components/loading";
 import { useEffect, useState } from 'react';
+import ForumPagination from './ForumPagination';
 import ThreadCard from './ThreadCard';
-import Pagination from './forumPagination';
 
 export default function ForumThread() {
     const [threads, setThreads] = useState([]);
@@ -58,7 +58,7 @@ export default function ForumThread() {
     return (
       <div>
         <LoadingModal showModal={loading} />
-        <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
+        <ForumPagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
         <div className="space-y-6">
           {threads.map((thread) => (
             <ThreadCard key={thread.id} thread={thread} />

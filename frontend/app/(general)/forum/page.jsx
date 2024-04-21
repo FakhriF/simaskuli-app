@@ -1,5 +1,5 @@
-import CreateThread from "./forumCreateThread";
 import Thread from "./thread";
+import ThreadCreation from "./threadCreation";
 
 export default function ForumThread() {
 
@@ -29,7 +29,7 @@ export default function ForumThread() {
 
                 <Thread />
 
-                <CreateThread /> 
+                <ThreadCreation /> 
                 
 
             </div>
