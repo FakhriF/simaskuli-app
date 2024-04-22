@@ -40,4 +40,7 @@ Route::delete('forum/{id}', [ThreadController::class, 'destroy']);
 // Thread Post
 Route::get('forum/posts', [ThreadPostController::class, 'index']);
 Route::get('forum/{id}/posts', [ThreadPostController::class, 'getPostsByThreadId']);
+Route::get('/forum/{forumid}/posts/{postid}', [ThreadPostController::class, 'showPost']);
 Route::post('forum/{id}/posts', [ThreadPostController::class, 'store']);
+Route::delete('forum/{id}/posts/', [ThreadPostController::class, 'destroy']);
+Route::delete('forum/{id}/posts/{postid}', [ThreadPostController::class, 'destroySinglePost']);

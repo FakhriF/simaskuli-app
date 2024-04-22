@@ -25,6 +25,7 @@ export default function WriteReply({ thread, user, id }) {
             );
             if (response.status === 201) {
                 console.log('Reply submitted successfully');
+                router.refresh();
                 router.push(`/forum/${id}`);
                 setReply('');
             } else {

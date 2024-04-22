@@ -1,7 +1,10 @@
+import { LoadingModal } from "@/app/(general)/components/loading";
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import ForumPagination from './ForumPagination';
 import ThreadCard from './ThreadCard';
+
+
 export default function ForumThread({ user }) {
   const [threads, setThreads] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -58,8 +61,9 @@ export default function ForumThread({ user }) {
 
   return (
     <div>
+      <LoadingModal showModal={loading} />
+      <div className="space-y-1">
       <ForumPagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
-      <div className="space-y-6">
         {threads.map((thread) => (
           <ThreadCard key={thread.id} thread={thread} isCreatedByLoggedInUser={isCreatedByLoggedInUser(thread.user_id)} />
         ))}
