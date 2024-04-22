@@ -3,7 +3,6 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import ForumPagination from './ForumPagination';
 import ThreadCard from './ThreadCard';
-import ThreadSearch from "./threadSearch";
 
 export default function ForumThread({ user }) {
   const [threads, setThreads] = useState([]);
@@ -85,11 +84,16 @@ export default function ForumThread({ user }) {
         <ForumPagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
         </div>
         <div className="grid justify-items-end">
-        <ThreadSearch 
-          searchInput={searchInput} 
-          setSearchInput={setSearchInput} 
-          handleSearch={handleSearch} 
-        />
+        <div className="flex justify-end">
+          <input 
+            type="text" 
+            placeholder="Search" 
+            className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            value={searchInput} 
+            onChange={(e) => setSearchInput(e.target.value)} 
+          />
+          <button className="bg-blue-500 text-white px-3 py-2 ml-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"  onClick={handleSearch}>Search</button>
+        </div>
         </div>
       </div>
       <div className="space-y-1">
