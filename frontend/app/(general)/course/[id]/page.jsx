@@ -1,7 +1,4 @@
-'use client';
-
 import Info from "./info";
-import { useEffect, useState } from 'react';
 
 export default function CoursePage({ params }) {
   
