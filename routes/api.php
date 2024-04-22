@@ -47,3 +47,5 @@ Route::get('forum', [ForumThreadController::class, 'index']);
 
 // Course
 Route::get('course', [CourseController::class, 'view']);
+Route::get('course/{id}', [CourseController::class, 'getById']);
+

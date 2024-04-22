@@ -1,3 +1,14 @@
+/*
+'use client'
+
+import { useState } from "react";
+import { getToken } from "../actions";
+import ThreadCreationForm from "./threadCreationForm";
+
+export const metadata = {
+    title: "Create Course",
+};
+*/
 export default function CreateCoursePage() {
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
