@@ -8,8 +8,6 @@ import ThreadCreation from "./threadCreation";
 
 export default function Forum() {
     const [userData, setUserData] = useState({});
-    const [searchQuery, setSearchQuery] = useState('');
-    const [threads, setThreads] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -28,24 +26,6 @@ export default function Forum() {
         fetchData();
     }, []);
 
-    const handleSearchInputChange = (event) => {
-        setSearchQuery(event.target.value);
-    };
-
-    const handleSearchSubmit = async (event) => {
-        event.preventDefault();
-        const token = await getToken();
-        const response = await fetch(`http://localhost:8000/api/forum/search?search${searchQuery}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-            },
-        });
-        const searchData = await response.json();
-        setThreads(searchData.data);
-    };
-
     return (
         <main className="py-8">
             <div className="max-w-7xl mx-auto px-6 space-y-3 sm:px-6 lg:px-8">
@@ -54,20 +34,6 @@ export default function Forum() {
                         <button className="text-gray-700 bg-gray-100 border border-gray-300 rounded-md px-3 py-2 hover:bg-gray-200">
                             Home
                         </button>
-                    </div>
-                    <div className="flex justify-end">
-                        <form onSubmit={handleSearchSubmit}>
-                            <input
-                                type="text"
-                                placeholder="Search"
-                                className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                value={searchQuery}
-                                onChange={handleSearchInputChange}
-                            />
-                            <button type="submit" className="bg-blue-500 text-white px-3 py-2 ml-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
-                                Search
-                            </button>
-                        </form>
                     </div>
                 </div>
                 <h1 className="text-3xl font-bold">Forum</h1>
