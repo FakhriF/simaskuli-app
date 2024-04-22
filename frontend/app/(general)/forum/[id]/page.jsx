@@ -3,9 +3,9 @@
 import { getToken } from "@/app/(general)/actions";
 import { formatDistanceToNow, parseISO } from 'date-fns';
 import { useEffect, useState } from 'react';
-import WriteReply from './WriteReply';
 import OriginalPost from './originalPost';
 import Reply from './reply';
+import WriteReply from './writeReply';
 
 export default function ForumPost({ params }) {
   const [forumPost, setForumPost] = useState(null);

@@ -74,7 +74,15 @@ class ThreadPostController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $threadPost = ThreadPost::find($id);
+        if (!$threadPost) {
+            return response()->json(['error' => 'Post not found'], 404);
+        }
+
+        $threadPost->content = $request->content;
+        $threadPost->save();
+
+        return response()->json($threadPost, 200);
     }
 
     /**
