@@ -7,10 +7,22 @@ export const metadata = {
 
 export default async function Info({id}) {
     
-    const res = await fetch(`http://localhost:8000/api/course/${id}`);
-    const data = await res.json();
+    let data = null;
+    try {
+        const res = await fetch(`http://localhost:8000/api/course/${id}`);
+        data = await res.json();
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+
+    if (!data) return (
+        <div>
+            <h1>Course not found</h1>
+        </div>
+    );
 
     //console.log({id});
+
 
     return (
         <div>
@@ -20,6 +32,10 @@ export default async function Info({id}) {
                 <p className="text-gray-500 mr-2">
                     {data.description}
                 </p>
+
+                <br />
+                <p className="font-bold mb-4">Lecturer: </p>
+                <p className="text-gray-500 mr-2">{data.user_id}</p>
                 </div>
                 <div className="sm:min-w-64 md:max-w-128 max-w-32 sm:mr-120">
                 <img src={data.image_url} alt="Course cover" className="rounded-lg" />
