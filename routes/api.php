@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ThreadPostController;
+use App\Http\Controllers\CourseController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -41,3 +42,8 @@ Route::post('forum', [ThreadController::class, 'store']);
 Route::get('forum/posts', [ThreadPostController::class, 'index']);
 Route::get('forum/{id}/posts', [ThreadPostController::class, 'getPostsByThreadId']);
 Route::post('forum/{id}/posts', [ThreadPostController::class, 'store']);
+// Forum
+Route::get('forum', [ForumThreadController::class, 'index']);
+
+// Course
+Route::get('course', [CourseController::class, 'view']);
