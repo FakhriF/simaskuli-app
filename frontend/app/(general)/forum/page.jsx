@@ -5,8 +5,8 @@ import { useEffect, useState } from "react";
 import Thread from "./thread";
 import ThreadCreation from "./threadCreation";
 
-export default function Forum() {
 
+export default function Forum() {
     const [userData, setUserData] = useState({});
 
     useEffect(() => {
@@ -26,7 +26,6 @@ export default function Forum() {
         fetchData();
     }, []);
 
-
     return (
         <main className="py-8">
             <div className="max-w-7xl mx-auto px-6 space-y-3 sm:px-6 lg:px-8">
@@ -36,18 +35,12 @@ export default function Forum() {
                             Home
                         </button>
                     </div>
-                    <div className="flex justify-end">
-                        <input
-                            type="text"
-                            placeholder="Search"
-                            className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        />
-                    </div>
                 </div>
                 <h1 className="text-3xl font-bold">Forum</h1>
-                <Thread user={userData} />
+                <Thread  user={userData} />
                 <ThreadCreation user={userData} />
             </div>
         </main>
     );
 }
+
