@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ThreadPostController;
+use App\Http\Controllers\CourseController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -44,3 +45,9 @@ Route::get('/forum/{forumid}/posts/{postid}', [ThreadPostController::class, 'sho
 Route::post('forum/{id}/posts', [ThreadPostController::class, 'store']);
 Route::delete('forum/{id}/posts/', [ThreadPostController::class, 'destroy']);
 Route::delete('forum/{id}/posts/{postid}', [ThreadPostController::class, 'destroySinglePost']);
+
+// Forum
+Route::get('forum', [ForumThreadController::class, 'index']);
+
+// Course
+Route::get('course', [CourseController::class, 'view']);

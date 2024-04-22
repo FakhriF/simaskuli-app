@@ -1,3 +1,32 @@
+# Changelog v0.6a (22 April 2024)
+
+## New:
+
+- Dapat membuat thread baru serta membalas thread
+- Pagination pada Forum (Terbatas 2 halaman)
+- Menambahkan profile picture pada aplikasi (Terbatas secara URL)
+- Menambahkan halaman Course dengan temporary dynamic link
+- Course sudah terkoneksi dengan Database
+
+## Changes:
+
+- Perubahan struktur NavBar untuk meningkatkan performa
+- Menambahkan atribut `profile_url` pada tabel `users` di backend
+
+## Bug Fixes:
+
+- Memperbaiki elemen yang mengalami inkonsistensi warna atau behaviour ketika dilakukan hovering
+
+## Bug:
+
+- Connected Devices masih berurut berdasarkan last activity sehingga perangkat yang digunakan bisa saja di posisi bawah
+- **(NEW!)** Pagination dengan input secara manual di address bar masih tidak konsisten
+
+## Notes:
+
+-   **PASTIKAN MELAKUKAN NPM INSTALL TERLEBIH DAHULU**
+-   Jika tidak terkoneksi internet dan sebelumnya sudah login, maka akan mengalami freeze, dan error always redirect. Hal ini dikarenakan aplikasi dijalankan dalam localhost.
+
 # Changelog v0.4a (2 Maret 2024)
 
 ## New:

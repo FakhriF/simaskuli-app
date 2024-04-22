@@ -3,13 +3,17 @@
 import { useState } from "react";
 import { getToken } from "../actions";
 import { ToastContainer, toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function ProfileSection({ user }) {
     const [name, setName] = useState(user.name);
+    const [profile_url, setProfileUrl] = useState(user.profile_url);
     const [birthDate, setBirthDate] = useState(user.birthDate);
 
     const [editing, setEditing] = useState(false);
+
+    const router = useRouter();
 
     const saveChanges = async () => {
         const token = await getToken();
@@ -20,11 +24,13 @@ export default function ProfileSection({ user }) {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify({ name, birthDate }),
+            body: JSON.stringify({ name, profile_url, birthDate }),
         })
             .then((response) => {
+                router.refresh();
                 setEditing(false);
                 toast.success("Profile updated successfully");
+                toast.info("Your data will be updated soon");
             })
             .catch((error) => {
                 console.log(error);
@@ -47,6 +53,19 @@ export default function ProfileSection({ user }) {
                         className="border p-2 rounded-md w-full"
                     />
                 </div>
+
+                <div className="space-y-2">
+                    <label htmlFor="image">Profile Image Link</label>
+                    <input
+                        type="text"
+                        id="image"
+                        onChange={(e) => setProfileUrl(e.target.value)}
+                        value={profile_url}
+                        disabled={!editing}
+                        className="border p-2 rounded-md w-full"
+                    />
+                </div>
+
                 <div className="space-y-2">
                     <label htmlFor="birthdate">Birthdate</label>
                     <input
