@@ -60,6 +60,8 @@ export default function ForumPost({ params }) {
     }
   };
 
+  
+
   useEffect(() => {
     if (forumPost && forumPost.updated_at) {
       const date = parseISO(forumPost.updated_at);
@@ -87,7 +89,7 @@ export default function ForumPost({ params }) {
           <div className="mt-8">
             <h2 className="text-lg font-medium mb-4">Replies</h2>
             {replies.map(reply => (
-              <Reply key={reply.id} reply={reply} onDelete={handleDeletePost} />
+              <Reply key={reply.id} reply={reply} currentUser={userData} onDelete={handleDeletePost} id={params.id}/>
             ))}
           </div>
         )}

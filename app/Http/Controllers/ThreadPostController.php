@@ -79,7 +79,7 @@ class ThreadPostController extends Controller
             return response()->json(['error' => 'Post not found'], 404);
         }
 
-        $threadPost->content = $request->content;
+        $threadPost->content = $request->input('content');
         $threadPost->save();
 
         return response()->json($threadPost, 200);

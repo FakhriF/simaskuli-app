@@ -1,3 +1,4 @@
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { MdEdit, MdReply, MdThumbUp } from 'react-icons/md';
 
@@ -5,6 +6,8 @@ export default function OriginalPost({ forumPost, formattedDate, user }) {
 	const [isEditing, setIsEditing] = useState(false);
 	const [editedTitle, setEditedTitle] = useState(forumPost.title);
 	const [editedContent, setEditedContent] = useState(forumPost.content);
+
+  const router = useRouter();
 
 	const handleEditClick = () => {
 		setIsEditing(true);
@@ -31,8 +34,6 @@ export default function OriginalPost({ forumPost, formattedDate, user }) {
 		}
 	};
 
-	console.log("forumPost.user.id:", forumPost.user.id);
-	console.log("userData.id:", user.id);
 
 	return (
 		<>
