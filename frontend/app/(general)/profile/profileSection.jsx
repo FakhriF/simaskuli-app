@@ -18,7 +18,7 @@ export default function ProfileSection({ user }) {
     const saveChanges = async () => {
         const token = await getToken();
 
-        const response = await fetch("http://localhost:8000/api/user", {
+        const response = await fetch(`${process.env.BACKEND_URL}/user`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",

@@ -19,7 +19,7 @@ export default async function ProfilePage() {
 
     // console.log(token);
 
-    const response = await fetch("http://localhost:8000/api/user", {
+    const response = await fetch(`${process.env.BACKEND_URL}/user`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",

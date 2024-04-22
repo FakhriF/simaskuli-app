@@ -11,7 +11,7 @@ export default async function RootLayout({ children }) {
     if (hasCookie) {
         const token = cookieStore.get("token").value;
 
-        await fetch(`http://localhost:8000/api/user/session/${token}`, {
+        await fetch(`${process.env.BACKEND_URL}/user/session/${token}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
