@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Thread;
 use App\Models\User;
 use App\Models\Session;
+use Illuminate\Database\Eloquent\Builder;
 
 
 class ThreadController extends Controller
@@ -16,7 +17,7 @@ class ThreadController extends Controller
      */
     public function index()
     {
-        $perPage = 2; 
+        $perPage = 5; 
         $threads = Thread::with('user')->paginate($perPage);
 
         return response()->json([
@@ -29,12 +30,26 @@ class ThreadController extends Controller
         
     }
 
+    public function search(Request $request)
+    {
+        $users = Thread::query()
+                 ->when(
+                    $request->search,
+                    function(Builder $builder) use ($request){
+                        $builder->where('title', 'ilike', "%{$request->search}%")
+                        ->orWhere('content', 'ilike', "%{$request->search}%");
+                    }
+                 )->paginate(5);
+                 
+        return $users;
+    }
+
+
+
     public function getForumThread(string $id)
     {
-        // Get the forum thread with the specified ID
         $thread = Thread::with('user')->find($id);
         
-        // Make sure the forum thread exists
         if (!$thread) {
             return response()->json(['error' => 'Forum thread not found'], 404);
         }
@@ -87,7 +102,7 @@ class ThreadController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        
     }
 
     /**
@@ -95,7 +110,16 @@ class ThreadController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $thread = Thread::find($id);
+        if (!$thread) {
+            return response()->json(['error' => 'Thread not found'], 404);
+        }
+        
+        $thread->title = $request->input('title');
+        $thread->content = $request->input('content');
+        $thread->save();
+        
+        return response()->json($thread, 200);
     }
 
     /**
@@ -103,6 +127,15 @@ class ThreadController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // Delete Thread
+        $thread = Thread::find($id);
+        if (!$thread) {
+            return response()->json(['error' => 'Thread not found'], 404);
+        }
+
+        $thread->delete();
+
+        return response()->json(['message' => 'Thread deleted successfully'], 200);
+        
     }
 }

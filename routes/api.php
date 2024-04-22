@@ -34,16 +34,19 @@ Route::delete('logout', [AuthController::class, 'logout']);
 
 // Thread
 Route::get('forum', [ThreadController::class, 'index']);
+Route::get('forum/search', [ThreadController::class, 'search']);
 Route::get('forum/{id}', [ThreadController::class, 'getForumThread']);
 Route::post('forum', [ThreadController::class, 'store']);
-
+Route::delete('forum/{id}', [ThreadController::class, 'destroy']);
 
 // Thread Post
 Route::get('forum/posts', [ThreadPostController::class, 'index']);
 Route::get('forum/{id}/posts', [ThreadPostController::class, 'getPostsByThreadId']);
+Route::get('/forum/{forumid}/posts/{postid}', [ThreadPostController::class, 'showPost']);
 Route::post('forum/{id}/posts', [ThreadPostController::class, 'store']);
-// Forum
-Route::get('forum', [ForumThreadController::class, 'index']);
+Route::delete('forum/{id}/posts/', [ThreadPostController::class, 'destroy']);
+Route::delete('forum/{id}/posts/{postid}', [ThreadPostController::class, 'destroySinglePost']);
+
 
 // Course
 Route::get('course', [CourseController::class, 'view']);

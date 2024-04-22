@@ -231,6 +231,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required',
             'birthDate' => 'required',
+            'profile_url' => 'required',
         ]);
 
         $user = ModelsUser::find($id);

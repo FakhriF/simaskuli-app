@@ -25,6 +25,12 @@ class ThreadPostController extends Controller
         return response()->json($threadPosts, 200);
     }
 
+    public function showPost(string $threadId, string $postId)
+    {
+        $threadPost = ThreadPost::with('thread', 'user')->where('thread_id', $threadId)->where('id', $postId)->get();
+        return response()->json($threadPost, 200);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -77,5 +83,22 @@ class ThreadPostController extends Controller
     public function destroy(string $id)
     {
         //
+
     }
+    public function destroySinglePost(string $threadId, string $postId)
+    {
+        $threadPost = ThreadPost::where('thread_id', $threadId)->where('id', $postId)->first();
+    
+        if (!$threadPost) {
+            return response()->json(['error' => 'Post not found'], 404);
+        }
+    
+        $threadPost->delete();
+    
+        return response()->json(['message' => 'Post deleted'], 200);
+    }
+    
+
+
+
 }
