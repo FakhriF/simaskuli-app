@@ -1,6 +1,6 @@
 import { formatDistanceToNow, parseISO } from 'date-fns';
 import { useState } from 'react';
-import { MdDeleteOutline, MdPerson } from 'react-icons/md';
+import { MdDeleteOutline } from 'react-icons/md';
 import PostDeletionPopup from './replyDeletionPopup';
 
 export default function Reply({ reply, onDelete }) {
@@ -27,8 +27,8 @@ export default function Reply({ reply, onDelete }) {
     <div className="bg-white border border-gray-300 shadow-md rounded-lg p-4 mb-4 relative">
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center">
-          <div className="bg-blue-500 rounded-full p-2 mr-3">
-            <MdPerson size={20} color="#FFF" />
+          <div className="bg-white rounded-full p-2 mr-3">
+          <img src = {reply.user.profile_url} className="w-12 h-12 rounded-full" />
           </div>
           <div>
             <h3 className="text-base font-medium text-gray-900">{reply.user.name}</h3>

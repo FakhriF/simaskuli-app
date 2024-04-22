@@ -1,4 +1,4 @@
-import { MdEdit, MdPerson, MdReply, MdThumbUp } from 'react-icons/md';
+import { MdEdit, MdReply, MdThumbUp } from 'react-icons/md';
 
 export default function OriginalPost({ forumPost, formattedDate }) {
   return (
@@ -6,8 +6,8 @@ export default function OriginalPost({ forumPost, formattedDate }) {
       <div className="bg-white shadow-md rounded-lg p-6 relative">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center">
-            <div className="bg-blue-500 rounded-full p-2 mr-3">
-              <MdPerson size={24} color="#FFF" />
+            <div className="bg-white rounded-full p-2 mr-3">
+            <img src = {forumPost.user.profile_url} className="w-12 h-12 rounded-full" />
             </div>
             <div>
               <h2 className="text-lg font-medium text-gray-900">{forumPost.user.name}</h2>
