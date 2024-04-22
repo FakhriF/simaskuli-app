@@ -15,7 +15,7 @@ export function ProfileConnectedDevicesPage() {
             setToken(token);
 
             const response = await fetch(
-                "http://localhost:8000/api/user/session",
+                `${process.env.BACKEND_URL}/user/session`,
                 {
                     method: "GET",
                     headers: {
