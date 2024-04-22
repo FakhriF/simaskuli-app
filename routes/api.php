@@ -46,8 +46,5 @@ Route::post('forum/{id}/posts', [ThreadPostController::class, 'store']);
 Route::delete('forum/{id}/posts/', [ThreadPostController::class, 'destroy']);
 Route::delete('forum/{id}/posts/{postid}', [ThreadPostController::class, 'destroySinglePost']);
 
-// Forum
-Route::get('forum', [ForumThreadController::class, 'index']);
-
 // Course
 Route::get('course', [CourseController::class, 'view']);
