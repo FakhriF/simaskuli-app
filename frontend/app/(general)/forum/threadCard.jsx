@@ -2,7 +2,7 @@ import { format } from 'date-fns';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { MdDeleteOutline, MdPerson, MdThumbUp } from 'react-icons/md';
+import { MdDeleteOutline, MdThumbUp } from 'react-icons/md';
 import ThreadDeletionPopup from './ThreadDeletionPopup';
 
 export default function ThreadCard({ thread, isCreatedByLoggedInUser }) {
@@ -39,8 +39,8 @@ export default function ThreadCard({ thread, isCreatedByLoggedInUser }) {
     <>
       <div className="bg-white border border-gray-300 shadow-md rounded-md p-4 mb-4 flex items-end justify-between">
           <div className="flex items-center">
-        <div className="bg-blue-500 rounded-full p-2 mr-3">
-          <MdPerson size={24} color="#FFF" />
+        <div className="bg-white rounded-full p-2 mr-3">
+        <img src = {thread.user?.profile_url} className="w-12 h-12 rounded-full" />
         
         </div>
             <Link href={`/forum/${thread.id}`}>
