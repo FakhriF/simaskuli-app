@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { useState } from 'react';
 
 export default function QuizCRUDPage() {
@@ -31,13 +31,6 @@ export default function QuizCRUDPage() {
     // Fungsi untuk memperbarui soal
     const updateQuestion = (index) => {
         // Implementasi pembaruan soal di sini
-    };
-
-    // Fungsi untuk menghapus opsi
-    const deleteOption = (index) => {
-        const updatedOptions = [...options];
-        updatedOptions.splice(index, 1);
-        setOptions(updatedOptions);
     };
 
     // Fungsi untuk menambahkan opsi baru
@@ -78,23 +71,9 @@ export default function QuizCRUDPage() {
                                             setOptions(newOptions);
                                         }}
                                     />
-                                    <button
-                                        className="mt-1 text-red-600 hover:text-red-900"
-                                        type="button"
-                                        onClick={() => deleteOption(index)}
-                                    >
-                                        Hapus
-                                    </button>
                                 </label>
                             </div>
                         ))}
-                        <button
-                            className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                            type="button"
-                            onClick={addOption}
-                        >
-                            Tambah Opsi
-                        </button>
                     </form>
                     <div className="flex flex-row items-center justify-end my-4">
                         <button

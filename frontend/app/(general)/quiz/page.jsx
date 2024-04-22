@@ -25,34 +25,34 @@ export default function QuizPage() {
                 <div
                     className={`${
                         selectedOption === 1 ? 'bg-blue-500' : 'bg-gray-500'
-                    } hover:bg-gray-700 text-white font-bold py-2 px-4 rounded my-4`}
+                    } text-white font-bold py-2 px-4 rounded my-4`}
                     onClick={() => handleOptionClick(1)} // Menangani klik opsi
                 >
-                    <button>Opsi waktu dipilih</button>
+                    <button>Opsi 1</button>
                 </div>
                 <div
                     className={`${
                         selectedOption === 2 ? 'bg-blue-500' : 'bg-gray-500'
-                    } hover:bg-gray-700 text-white font-bold py-2 px-4 rounded my-4`}
+                    } text-white font-bold py-2 px-4 rounded my-4`}
                     onClick={() => handleOptionClick(2)} // Menangani klik opsi
                 >
-                    <button>Opsi gak dipilih</button>
+                    <button>Opsi 2</button>
                 </div>
                 <div
                     className={`${
                         selectedOption === 3 ? 'bg-blue-500' : 'bg-gray-500'
-                    } hover:bg-gray-700 text-white font-bold py-2 px-4 rounded my-4`}
+                    } text-white font-bold py-2 px-4 rounded my-4`}
                     onClick={() => handleOptionClick(3)} // Menangani klik opsi
                 >
-                    <button>Opsi gak dipilih</button>
+                    <button>Opsi 3</button>
                 </div>
                 <div
                     className={`${
                         selectedOption === 4 ? 'bg-blue-500' : 'bg-gray-500'
-                    } hover:bg-gray-700 text-white font-bold py-2 px-4 rounded my-4`}
+                    } text-white font-bold py-2 px-4 rounded my-4`}
                     onClick={() => handleOptionClick(4)} // Menangani klik opsi
                 >
-                    <button>Opsi gak dipilih</button>
+                    <button>Opsi 4</button>
                 </div>
                 <div className="border-t border-gray-300 py-4">
                     <button className="float-left hover:bg-blue-500 hover:text-white bg-gray-300 text-gray-400 font-bold py-2 px-4 rounded">
