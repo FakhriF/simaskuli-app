@@ -31,10 +31,8 @@ class ThreadController extends Controller
 
     public function getForumThread(string $id)
     {
-        // Get the forum thread with the specified ID
         $thread = Thread::with('user')->find($id);
         
-        // Make sure the forum thread exists
         if (!$thread) {
             return response()->json(['error' => 'Forum thread not found'], 404);
         }
@@ -87,7 +85,7 @@ class ThreadController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        
     }
 
     /**

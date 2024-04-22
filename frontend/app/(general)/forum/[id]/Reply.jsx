@@ -1,7 +1,6 @@
 import { formatDistanceToNow, parseISO } from 'date-fns';
 import { useState } from 'react';
-import { AiOutlineDelete } from 'react-icons/ai';
-import { MdPerson } from 'react-icons/md';
+import { MdDeleteOutline, MdPerson } from 'react-icons/md';
 import PostDeletionPopup from './replyDeletionPopup';
 
 export default function Reply({ reply, onDelete }) {
@@ -46,7 +45,7 @@ export default function Reply({ reply, onDelete }) {
           className="flex items-center text-sm text-red-500 hover:text-red-600 mr-2 py-2"
           onClick={handleDelete}
         >
-          <AiOutlineDelete />
+          <MdDeleteOutline />
           <span>Delete</span>
         </button>
       </div>
