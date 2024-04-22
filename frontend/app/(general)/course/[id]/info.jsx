@@ -21,9 +21,6 @@ export default async function Info({id}) {
         </div>
     );
 
-    //console.log({id});
-
-
     return (
         <div>
             <div className="p-8 sm:flex sm:items-center sm:justify-between sm:space-x-4 space-y-4 sm:space-y-0 sm:p-8 rounded-lg shadow-lg">

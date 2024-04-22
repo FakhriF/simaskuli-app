@@ -4,8 +4,6 @@ import Info from "./info";
 import { useEffect, useState } from 'react';
 
 export default function CoursePage({ params }) {
-  //const router = useRouter();
-
   
   return (
     <div className="w-full p-4 mb-8">

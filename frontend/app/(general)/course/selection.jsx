@@ -9,19 +9,6 @@ export default async function Selection() {
     const res = await fetch('http://localhost:8000/api/course');
     const data = await res.json();
 
-    
-    /*
-    for (let i = 0; i < data.length; i++) {
-        const userId = data[i].id;
-        /*
-        const userRes = await fetch(`http://localhost:8000/api/course/${userId}`);
-        
-        const userData = await userRes.json();
-        data[i].id = userData;
-        
-    }*/
-
-    //console.log(data);
     return (
         <div>
             {data.map((course) => (
