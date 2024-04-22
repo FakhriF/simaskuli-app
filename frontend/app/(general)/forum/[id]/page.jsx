@@ -2,6 +2,7 @@
 
 import { getToken } from "@/app/(general)/actions";
 import { formatDistanceToNow, parseISO } from 'date-fns';
+import Link from "next/link";
 import { useEffect, useState } from 'react';
 import OriginalPost from './originalPost';
 import Reply from './reply';
@@ -79,7 +80,12 @@ export default function ForumPost({ params }) {
   return (
     <main className="py-8">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-lg font-medium mb-4">{forumPost && forumPost.title}</h2>
+        <Link href="/forum">
+        <button className="text-gray-700 bg-gray-100 border border-gray-300 rounded-md px-3 py-2 hover:bg-gray-200" onClick={() => history.goBack()}>
+          Back
+        </button>
+        </Link>
+        <h2 className="text-lg text-center font-medium mb-4">{forumPost && forumPost.title}</h2>
         {forumPost ? (
           <OriginalPost forumPost={forumPost} formattedDate={formattedDate} user={userData} />
         ) : (
