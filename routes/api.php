@@ -37,9 +37,10 @@ Route::get('forum', [ThreadController::class, 'index']);
 Route::get('forum/search', [ThreadController::class, 'search']);
 Route::get('forum/{id}', [ThreadController::class, 'getForumThread']);
 Route::post('forum', [ThreadController::class, 'store']);
+Route::put('forum/{id}', [ThreadController::class, 'update']);
 Route::delete('forum/{id}', [ThreadController::class, 'destroy']);
 
-// Thread Post
+// Individual Thread
 Route::get('forum/posts', [ThreadPostController::class, 'index']);
 Route::get('forum/{id}/posts', [ThreadPostController::class, 'getPostsByThreadId']);
 Route::get('/forum/{forumid}/posts/{postid}', [ThreadPostController::class, 'showPost']);

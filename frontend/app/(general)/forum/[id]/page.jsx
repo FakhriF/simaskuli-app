@@ -3,30 +3,29 @@
 import { getToken } from "@/app/(general)/actions";
 import { formatDistanceToNow, parseISO } from 'date-fns';
 import { useEffect, useState } from 'react';
-import Reply from './Reply';
 import WriteReply from './WriteReply';
 import OriginalPost from './originalPost';
+import Reply from './reply';
 
 export default function ForumPost({ params }) {
   const [forumPost, setForumPost] = useState(null);
   const [formattedDate, setFormattedDate] = useState('');
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState('');
   const [replies, setReplies] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const token = await getToken();
         const [forumPostRes, userRes, repliesRes] = await Promise.all([
           fetch(`http://localhost:8000/api/forum/${params.id}`),
-          getToken().then(token =>
-            fetch("http://localhost:8000/api/user", {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
-            })
-          ),
+          fetch("http://localhost:8000/api/user", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }),
           fetch(`http://localhost:8000/api/forum/${params.id}/posts`)
         ]);
 
@@ -46,6 +45,8 @@ export default function ForumPost({ params }) {
 
     fetchData();
   }, [params.id]);
+
+  
 
   const handleDeletePost = async (postId) => {
     try {
@@ -69,14 +70,16 @@ export default function ForumPost({ params }) {
         setFormattedDate(`${timeDiff} ago`);
       }
     }
-  }, [forumPost]);
+  }, [forumPost, userData], );
+
+
 
   return (
     <main className="py-8">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-lg font-medium mb-4">{forumPost && forumPost.title}</h2>
         {forumPost ? (
-          <OriginalPost forumPost={forumPost} formattedDate={formattedDate} />
+          <OriginalPost forumPost={forumPost} formattedDate={formattedDate} user={userData} />
         ) : (
           <p className="text-center text-gray-500">Loading...</p>
         )}
