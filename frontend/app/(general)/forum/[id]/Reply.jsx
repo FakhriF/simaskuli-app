@@ -27,12 +27,13 @@ export default function Reply({ reply, onDelete }) {
     <div className="bg-white border border-gray-300 shadow-md rounded-lg p-4 mb-4 relative">
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center">
-          <div className="bg-white rounded-full p-2 mr-3">
+          <div className={`bg-${reply.user?.role === 'student' ? 'blue' : reply.user?.role === 'teacher' ? 'red' : 'white'}-500 rounded-full p-1 mr-3`}>
           <img src = {reply.user.profile_url} className="w-12 h-12 rounded-full" />
           </div>
           <div>
             <h3 className="text-base font-medium text-gray-900">{reply.user.name}</h3>
-            <p className="text-sm text-gray-600">{reply.user.role}</p>
+            <p className={`text-sm capitalize ${reply.user?.role === 'student' ? 'text-blue-600' : reply.user?.role === 'teacher' ? 'text-red-600' : 'text-gray-600'}`}>{reply.user?.role}</p>
+
           </div>
         </div>
         <p className="text-sm text-gray-600">{formatDistanceToNow(parseISO(reply.created_at))} ago</p>
