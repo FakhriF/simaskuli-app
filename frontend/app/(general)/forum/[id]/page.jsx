@@ -1,108 +1,95 @@
+'use client';
 
-'use client'
- 
-import { useRouter } from 'next/navigation';
+import { getToken } from "@/app/(general)/actions";
+import { formatDistanceToNow, parseISO } from 'date-fns';
+import { useEffect, useState } from 'react';
+import Reply from './Reply';
+import WriteReply from './WriteReply';
+import OriginalPost from './originalPost';
 
-export default function ForumPost() {
-    const router = useRouter();
+export default function ForumPost({ params }) {
+  const [forumPost, setForumPost] = useState(null);
+  const [formattedDate, setFormattedDate] = useState('');
+  const [userData, setUserData] = useState(null);
+  const [replies, setReplies] = useState([]);
 
-    return (
-        <main className="py-8">
-            <div className="max-w-7xl mx-auto px-6 space-y-3 sm:px-6 lg:px-8">
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [forumPostRes, userRes, repliesRes] = await Promise.all([
+          fetch(`http://localhost:8000/api/forum/${params.id}`),
+          getToken().then(token =>
+            fetch("http://localhost:8000/api/user", {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+            })
+          ),
+          fetch(`http://localhost:8000/api/forum/${params.id}/posts`)
+        ]);
 
+        const [forumPostData, userData, repliesData] = await Promise.all([
+          forumPostRes.json(),
+          userRes.json(),
+          repliesRes.json()
+        ]);
 
-                <div className="block border border-black p-6 rounded-lg shadow-md">
-                    <div className="bg-gray-200 rounded-lg p-4">
-                        {/* Content for the left side */}
-                        <div class="text-slate-700 dark:text-slate-500">
-                        Professor ...
-                        </div>
-                        <div class="text-sky-500 dark:text-sky-400">
-                        Teacher
-                        </div>
-                    </div>
-                    
-                    <div className="flex py-2">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                    </div>
+        setForumPost(forumPostData);
+        setUserData(userData);
+        setReplies(repliesData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
 
-                    <div className="flex justify-end space-x-2">
-                        <div>
-                            Like
-                        </div>
+    fetchData();
+  }, [params.id]);
 
-                        <div>
-                            Reply
-                        </div>
-                    </div>
-                </div>
+  const handleDeletePost = async (postId) => {
+    try {
+      await fetch(`http://localhost:8000/api/forum/${params.id}/posts/${postId}`, {
+        method: 'DELETE',
+      });
 
-                <div className="block border border-black p-6 rounded-lg shadow-md">
-                    <div className="bg-gray-200 rounded-lg p-4">
-                        {/* Content for the left side */}
-                        <div class="text-slate-700 dark:text-slate-500">
-                        Student ...
-                        </div>
-                        <div class="text-red-500 dark:text-red-400">
-                        Student
-                        </div>
-                    </div>
-                    
-                    <div className="flex py-2">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                    </div>
+      setReplies(replies.filter(reply => reply.id !== postId));
+    } catch (error) {
+      console.error('Error deleting post:', error);
+    }
+  };
 
-                    <div className="flex justify-end space-x-2">
-                        <div>
-                            Like
-                        </div>
+  useEffect(() => {
+    if (forumPost && forumPost.updated_at) {
+      const date = parseISO(forumPost.updated_at);
+      const timeDiff = formatDistanceToNow(date);
+      if (timeDiff === 'less than a minute') {
+        setFormattedDate('just now');
+      } else {
+        setFormattedDate(`${timeDiff} ago`);
+      }
+    }
+  }, [forumPost]);
 
-                        <div>
-                            Reply
-                        </div>
-                    </div>
-                </div>
-
-                
-                <form>
-                    <div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
-                        <div class="px-4 py-2 bg-white rounded-t-lg ">
-                                <label for="comment" class="sr-only">Your comment</label>
-                                <textarea id="comment" name="comment" rows="4" class="w-full p-3 text-sm text border-2 focus:ring-0 " placeholder="Write your reply"></textarea>
-                            </div>
-                            <div class="flex items-center justify-between px-3 py-2 border-t dark:border-gray-600">
-                                <button type="submit" class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
-                                    Post comment
-                                </button>
-                                <div class="flex ps-0 space-x-1 rtl:space-x-reverse sm:ps-2">
-                                    <button type="button" class="inline-flex justify-center items-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
-                                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 20">
-                                                <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M1 6v8a5 5 0 1 0 10 0V4.5a3.5 3.5 0 1 0-7 0V13a2 2 0 0 0 4 0V6"/>
-                                            </svg>
-                                        <span class="sr-only">Attach file</span>
-                                    </button>
-                                    <button type="button" class="inline-flex justify-center items-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
-                                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 20">
-                                                <path d="M8 0a7.992 7.992 0 0 0-6.583 12.535 1 1 0 0 0 .12.183l.12.146c.112.145.227.285.326.4l5.245 6.374a1 1 0 0 0 1.545-.003l5.092-6.205c.206-.222.4-.455.578-.7l.127-.155a.934.934 0 0 0 .122-.192A8.001 8.001 0 0 0 8 0Zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z"/>
-                                            </svg>
-                                        <span class="sr-only">Set location</span>
-                                    </button>
-                                    <button type="button" class="inline-flex justify-center items-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
-                                        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
-                                                <path d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z"/>
-                                            </svg>
-                                        <span class="sr-only">Upload image</span>
-                                    </button>
-                                </div>
-                            
-                        </div>
-                    </div>
-                </form>
-
-            </div>
-
-        </main>
-
-
-    )
+  return (
+    <main className="py-8">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 className="text-lg font-medium mb-4">{forumPost && forumPost.title}</h2>
+        {forumPost ? (
+          <OriginalPost forumPost={forumPost} formattedDate={formattedDate} />
+        ) : (
+          <p className="text-center text-gray-500">Loading...</p>
+        )}
+        {replies.length > 0 && (
+          <div className="mt-8">
+            <h2 className="text-lg font-medium mb-4">Replies</h2>
+            {replies.map(reply => (
+              <Reply key={reply.id} reply={reply} onDelete={handleDeletePost} />
+            ))}
+          </div>
+        )}
+        <WriteReply thread={forumPost} user={userData} id={params.id} />
+      </div>
+    </main>
+  );
 }

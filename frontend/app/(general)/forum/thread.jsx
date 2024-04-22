@@ -1,50 +1,73 @@
-import { format } from 'date-fns';
-import Link from 'next/link';
-import { AiOutlineLike, AiOutlineMessage } from 'react-icons/ai';
+import { LoadingModal } from "@/app/(general)/components/loading";
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import ForumPagination from './ForumPagination';
+import ThreadCard from './ThreadCard';
 
-export const metadata = {
-    title: "Thread",
-};
 
-export default async function Thread() {
-    const res = await fetch('http://localhost:8000/api/forum');
-    const data = await res.json();
+export default function ForumThread({ user }) {
+  const [threads, setThreads] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(false);
 
-    for (let i = 0; i < data.length; i++) {
-        const userId = data[i].user_id;
-        const userRes = await fetch(`http://localhost:8000/api/users/${userId}`);
-        const userData = await userRes.json();
-        data[i].user = userData;
-    }
+  const router = useRouter();
 
-    return (
-        <div>
-            {data.map((thread) => (
-                <div className="space-y-6" key={thread.id}>
-                    <Link href={`/forum/${thread.id}`}>
-                        <div className="block p-6 border border-black rounded-md shadow-md hover:bg-gray-100 flex items-end justify-between">
-                            <div className="flex-grow">
-                                <h5 className="mb-2 text-xl font-bold">
-                                    {thread.title}
-                                </h5>
-                                <p className="font-normal text-gray-6000">
-                                    By {thread.user?.name}, {format(new Date(thread.created_at), 'MMMM dd, yyyy')}
-                                </p>
-                            </div>
-                            <div className="flex items-center space-x-3">
-                                <div className="flex items-center space-x-1 hover:text-cyan-700">
-                                    <AiOutlineLike />
-                                    <span>Like</span>
-                                </div>
-                                <div className="flex items-center space-x-1">
-                                    <AiOutlineMessage />
-                                    <span>Views</span>
-                                </div>
-                            </div>
-                        </div>
-                    </Link>
-                </div>
-            ))}
-        </div>
-    );
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+
+        const [forumRes, usersRes] = await Promise.all([
+          fetch(`http://localhost:8000/api/forum?page=${currentPage}`),
+          fetch(`http://localhost:8000/api/users`)
+        ]);
+
+        const [forumData, userData] = await Promise.all([
+          forumRes.json(),
+          usersRes.json()
+        ]);
+
+        const userDataMap = userData.reduce((acc, user) => {
+          acc[user.id] = user;
+          return acc;
+        }, {});
+
+        const threadsData = forumData.data;
+        const updatedThreads = threadsData.map(thread => ({
+          ...thread,
+          user: userDataMap[thread.user_id]
+        }));
+
+        setTotalPages(forumData.meta.total_pages);
+        setThreads(updatedThreads);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [currentPage, user.id]);
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
+
+  const isCreatedByLoggedInUser = (userId) => {
+    return userId === user.id;
+  };
+
+  return (
+    <div>
+      <LoadingModal showModal={loading} />
+      <div className="space-y-1">
+      <ForumPagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
+        {threads.map((thread) => (
+          <ThreadCard key={thread.id} thread={thread} isCreatedByLoggedInUser={isCreatedByLoggedInUser(thread.user_id)} />
+        ))}
+      </div>
+    </div>
+  );
 }

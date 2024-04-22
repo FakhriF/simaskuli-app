@@ -5,24 +5,24 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ForumThread extends Model
+class ThreadPost extends Model
 {
     use HasFactory;
 
-    protected $table = 'forum_thread';
-
+    protected $table = 'thread_post';
 
     protected $fillable = [
-        'user_id',
-        'title',
-        'content'
+        'content',
+        'like'
     ];
 
-
-    public function user(){
-        return $this->belongsTo(User::class, 'user_id', 'id');
+    public function thread()
+    {
+        return $this->belongsTo(Thread::class, 'thread_id', 'id');
     }
 
-
-
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

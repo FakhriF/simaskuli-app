@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ForumThreadController;
+use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ThreadPostController;
+use App\Http\Controllers\CourseController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,5 +32,19 @@ Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
 Route::delete('logout', [AuthController::class, 'logout']);
 
-// Forum
-Route::get('forum', [ForumThreadController::class, 'index']);
+// Thread
+Route::get('forum', [ThreadController::class, 'index']);
+Route::get('forum/{id}', [ThreadController::class, 'getForumThread']);
+Route::post('forum', [ThreadController::class, 'store']);
+Route::delete('forum/{id}', [ThreadController::class, 'destroy']);
+
+// Thread Post
+Route::get('forum/posts', [ThreadPostController::class, 'index']);
+Route::get('forum/{id}/posts', [ThreadPostController::class, 'getPostsByThreadId']);
+Route::get('/forum/{forumid}/posts/{postid}', [ThreadPostController::class, 'showPost']);
+Route::post('forum/{id}/posts', [ThreadPostController::class, 'store']);
+Route::delete('forum/{id}/posts/', [ThreadPostController::class, 'destroy']);
+Route::delete('forum/{id}/posts/{postid}', [ThreadPostController::class, 'destroySinglePost']);
+
+// Course
+Route::get('course', [CourseController::class, 'view']);
