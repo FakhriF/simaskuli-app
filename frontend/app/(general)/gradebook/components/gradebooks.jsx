@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
-import CourseGrades from './coursegradebook';
+import CourseGrades from '../../course/grades/[student_id]/coursegradebook';
 
 
-function Gradebook({ studentGrades }) {
-    const [selectedCourse, setSelectedCourse] = useState(null);
-
-    const handleCourseClick = (course) => {
-        setSelectedCourse(course);
-        const newUrl = `/gradebook/${course.toLowerCase()}`;
-        window.history.replaceState({ path: newUrl }, '', newUrl);
-    };
+async function Gradebook({ studentGrades }) {
+    // const [selectedCourse, setSelectedCourse] = useState(null);
+    // const handleCourseClick = (course) => {
+    //     setSelectedCourse(course);
+    //     const newUrl = `/gradebook/${course.toLowerCase()}`;
+    //     window.history.replaceState({ path: newUrl }, '', newUrl);
+    // };
+    // const res = await fetch('http://localhost:8000/api/course');
+    // const data = await res.json();
+    // lihat nilai secara umum
+    // akses nilai di masing-masing course ketika klik course
 
     return (
         <div className="container mx-auto py-8">

@@ -30,7 +30,7 @@ const studentGrades = {
     },
   };
 
-export default function gradebookStudent(){
+export default function GradebookStudentPage(){
     return (
         <div className="App">
             <Gradebook studentGrades={studentGrades} />
