@@ -9,6 +9,7 @@ export default async function Selection() {
     const res = await fetch('http://localhost:8000/api/course');
     const data = await res.json();
 
+    
     return (
         <div>
             {data.map((course) => (
