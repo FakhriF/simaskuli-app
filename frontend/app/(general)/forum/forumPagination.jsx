@@ -118,7 +118,7 @@ const renderPageNumbers = () => {
       
   
     return (
-      <nav aria-label="pagination" className="mx-auto flex justify-left" role="navigation">
+      <nav aria-label="pagination" className="mx-auto" role="navigation">
         <ul className="flex items-center gap-1">
           <li>
             <button
@@ -146,6 +146,7 @@ const renderPageNumbers = () => {
             </button>
           </li>
         </ul>
+        
       </nav>
     );
   }
