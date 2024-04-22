@@ -1,3 +1,14 @@
+/*
+'use client'
+
+import { useState } from "react";
+import { getToken } from "../actions";
+import ThreadCreationForm from "./threadCreationForm";
+
+export const metadata = {
+    title: "Create Course",
+};
+*/
 export default function CreateCoursePage() {
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
@@ -12,7 +23,7 @@ export default function CreateCoursePage() {
             name="title"
             id="title"
             autoComplete="off"
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-indigo-200 focus:ring-1 sm:text-sm"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-indigo-200 focus:ring-1 sm:text-sm p-2"
             required
           />
         </div>
@@ -34,10 +45,11 @@ export default function CreateCoursePage() {
           </label>
           <input
             type="url"
-            name="coverImage"
-            id="coverImage"
+            name="image_url"
+            id="image_url"
             autoComplete="off"
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-indigo-200 focus:ring-1 sm:text-sm"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-indigo-200 focus:ring-1 sm:text-sm p-4"
+            required
           />
         </div>
         {/* Disable interactivity for now */}

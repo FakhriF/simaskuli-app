@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Thread;
 use App\Models\User;
 use App\Models\Session;
+use Illuminate\Database\Eloquent\Builder;
 
 
 class ThreadController extends Controller
@@ -28,6 +29,22 @@ class ThreadController extends Controller
     ]);
         
     }
+
+    public function search(Request $request)
+    {
+        $users = Thread::query()
+                 ->when(
+                    $request->search,
+                    function(Builder $builder) use ($request){
+                        $builder->where('title', 'ilike', "%{$request->search}%")
+                        ->orWhere('content', 'ilike', "%{$request->search}%");
+                    }
+                 )->paginate(5);
+                 
+        return $users;
+    }
+
+
 
     public function getForumThread(string $id)
     {
@@ -93,7 +110,16 @@ class ThreadController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $thread = Thread::find($id);
+        if (!$thread) {
+            return response()->json(['error' => 'Thread not found'], 404);
+        }
+        
+        $thread->title = $request->input('title');
+        $thread->content = $request->input('content');
+        $thread->save();
+        
+        return response()->json($thread, 200);
     }
 
     /**
