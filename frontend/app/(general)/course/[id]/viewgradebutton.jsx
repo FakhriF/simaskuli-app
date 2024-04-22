@@ -1,3 +1,4 @@
+'use client';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { getToken } from "@/app/(general)/actions";
@@ -31,7 +32,7 @@ export default function ViewGradeButton({id}) {
     useEffect(() => {
         const fetchCourse = async () => {
             try {
-                const res = await fetch(`http://localhost:8000/api/course{id}`);
+                const res = await fetch(`http://localhost:8000/api/course/${id}`);
                 const course = await res.json();
                 setCourse(course);
             } catch (error) {
@@ -48,7 +49,7 @@ export default function ViewGradeButton({id}) {
     console.log(course)
     return (
         <div className="my-4">
-            {course.length > 0 ? (
+            {course !== null ? (
                 <Link href={`/course/${course.id}/grades/${userData.id}`}>
                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                         View Grades

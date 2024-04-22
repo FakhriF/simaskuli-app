@@ -25,7 +25,7 @@ class GradesController extends Controller
     //untuk per siswa
     public function showUserGradesOnCourse(string $courseId, string $userId)
     {
-        $userGradesonCourse = Grades::with('course', 'user')->where('course_id', $courseId)->where('student_id', $userId)->get();
+        $userGradesonCourse = Grades::with('course', 'user', 'quiz')->where('course_id', $courseId)->where('student_id', $userId)->get();
         return response()->json($userGradesonCourse, 200);
     }
 
