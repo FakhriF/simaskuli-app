@@ -17,7 +17,7 @@ export default function OriginalPost({ forumPost, formattedDate, user }) {
 		e.preventDefault();
 		const data = { title: editedTitle, content: editedContent };
 		try {
-			const response = await fetch(`http://localhost:8000/api/forum/${forumPost.id}`, {
+			const response = await fetch(`${process.env.BACKEND_URL}/forum/${forumPost.id}`, {
 				method: "PUT",
 				headers: {
 					"Content-Type": "application/json",

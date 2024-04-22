@@ -22,7 +22,7 @@ export default function Reply({ reply, currentUser, onDelete, id  }) {
 
   const handleEditSave = async () => {
     try {
-      const response = await fetch(`http://localhost:8000/api/forum/${id}/posts/${reply.id}`, {
+      const response = await fetch(`${process.env.BACKEND_URL}/forum/${id}/posts/${reply.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

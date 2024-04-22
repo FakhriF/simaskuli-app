@@ -19,15 +19,15 @@ export default function ForumPost({ params }) {
       try {
         const token = await getToken();
         const [forumPostRes, userRes, repliesRes] = await Promise.all([
-          fetch(`http://localhost:8000/api/forum/${params.id}`),
-          fetch("http://localhost:8000/api/user", {
+          fetch(`${process.env.BACKEND_URL}/forum/${params.id}`),
+          fetch(`${process.env.BACKEND_URL}/user`, {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${token}`,
             },
           }),
-          fetch(`http://localhost:8000/api/forum/${params.id}/posts`)
+          fetch(`${process.env.BACKEND_URL}/forum/${params.id}/posts`)
         ]);
 
         const [forumPostData, userData, repliesData] = await Promise.all([
