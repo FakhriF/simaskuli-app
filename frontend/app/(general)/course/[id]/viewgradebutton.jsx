@@ -13,7 +13,7 @@ export default function ViewGradeButton({id}) {
     useEffect(() => {
         const fetchData = async () => {
             const token = await getToken();
-            const response = await fetch("http://localhost:8000/api/user", {
+            const response = await fetch("${process.env.BACKEND_URL}/user", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -32,7 +32,7 @@ export default function ViewGradeButton({id}) {
     useEffect(() => {
         const fetchCourse = async () => {
             try {
-                const res = await fetch(`http://localhost:8000/api/course/${id}`);
+                const res = await fetch(`${process.env.BACKEND_URL}/course/${id}`);
                 const course = await res.json();
                 setCourse(course);
             } catch (error) {
