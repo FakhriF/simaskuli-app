@@ -31,7 +31,7 @@ export default function ChangePasswordPage() {
         const token = await getToken();
 
         const response = await fetch(
-            "http://localhost:8000/api/user/password",
+            `${process.env.BACKEND_URL}/user/password`,
             {
                 method: "PUT",
                 headers: {

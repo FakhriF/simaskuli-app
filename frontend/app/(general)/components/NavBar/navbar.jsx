@@ -5,7 +5,7 @@ import NavBarDropDown from "./navbarComp";
 export default async function Navbar() {
     const token = await getToken();
 
-    const response = await fetch("http://localhost:8000/api/user", {
+    const response = await fetch(`${process.env.BACKEND_URL}/user`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
