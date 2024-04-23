@@ -9,7 +9,7 @@ export default async function Info({id}) {
     
     let data = null;
     try {
-        const res = await fetch(`http://localhost:8000/api/course/${id}`);
+        const res = await fetch(`${process.env.BACKEND_URL}/course/${id}`);
         data = await res.json();
     } catch (error) {
         console.error('Error fetching data:', error);

@@ -2,32 +2,32 @@
 
 import { getToken } from "@/app/(general)/actions";
 import { formatDistanceToNow, parseISO } from 'date-fns';
+import Link from "next/link";
 import { useEffect, useState } from 'react';
-import Reply from './Reply';
-import WriteReply from './WriteReply';
 import OriginalPost from './originalPost';
+import Reply from './reply';
+import WriteReply from './writeReply';
 
 export default function ForumPost({ params }) {
   const [forumPost, setForumPost] = useState(null);
   const [formattedDate, setFormattedDate] = useState('');
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState('');
   const [replies, setReplies] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const token = await getToken();
         const [forumPostRes, userRes, repliesRes] = await Promise.all([
-          fetch(`http://localhost:8000/api/forum/${params.id}`),
-          getToken().then(token =>
-            fetch("http://localhost:8000/api/user", {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
-            })
-          ),
-          fetch(`http://localhost:8000/api/forum/${params.id}/posts`)
+          fetch(`${process.env.BACKEND_URL}/forum/${params.id}`),
+          fetch(`${process.env.BACKEND_URL}/user`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }),
+          fetch(`${process.env.BACKEND_URL}/forum/${params.id}/posts`)
         ]);
 
         const [forumPostData, userData, repliesData] = await Promise.all([
@@ -47,6 +47,8 @@ export default function ForumPost({ params }) {
     fetchData();
   }, [params.id]);
 
+  
+
   const handleDeletePost = async (postId) => {
     try {
       await fetch(`http://localhost:8000/api/forum/${params.id}/posts/${postId}`, {
@@ -59,6 +61,8 @@ export default function ForumPost({ params }) {
     }
   };
 
+  
+
   useEffect(() => {
     if (forumPost && forumPost.updated_at) {
       const date = parseISO(forumPost.updated_at);
@@ -69,14 +73,21 @@ export default function ForumPost({ params }) {
         setFormattedDate(`${timeDiff} ago`);
       }
     }
-  }, [forumPost]);
+  }, [forumPost, userData], );
+
+
 
   return (
     <main className="py-8">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-lg font-medium mb-4">{forumPost && forumPost.title}</h2>
+        <Link href="/forum">
+        <button className="text-gray-700 bg-gray-100 border border-gray-300 rounded-md px-3 py-2 hover:bg-gray-200" onClick={() => history.goBack()}>
+          Back
+        </button>
+        </Link>
+        <h2 className="text-lg text-center font-medium mb-4">{forumPost && forumPost.title}</h2>
         {forumPost ? (
-          <OriginalPost forumPost={forumPost} formattedDate={formattedDate} />
+          <OriginalPost forumPost={forumPost} formattedDate={formattedDate} user={userData} />
         ) : (
           <p className="text-center text-gray-500">Loading...</p>
         )}
@@ -84,7 +95,7 @@ export default function ForumPost({ params }) {
           <div className="mt-8">
             <h2 className="text-lg font-medium mb-4">Replies</h2>
             {replies.map(reply => (
-              <Reply key={reply.id} reply={reply} onDelete={handleDeletePost} />
+              <Reply key={reply.id} reply={reply} currentUser={userData} onDelete={handleDeletePost} id={params.id}/>
             ))}
           </div>
         )}

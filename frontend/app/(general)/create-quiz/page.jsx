@@ -8,17 +8,20 @@ export default function QuizCRUDPage() {
     // State untuk menyimpan data inputan
     const [questionText, setQuestionText] = useState('');
     const [options, setOptions] = useState(['', '', '', '']);
+    const [correctOption, setCorrectOption] = useState(null);
 
     // Fungsi untuk menambahkan soal baru
     const addQuestion = () => {
         const newQuestion = {
             question: questionText,
             options: options,
+            correctOption: correctOption
         };
         setQuestions([...questions, newQuestion]);
         // Reset inputan setelah menambahkan soal
         setQuestionText('');
         setOptions(['', '', '', '']);
+        setCorrectOption(null);
     };
 
     // Fungsi untuk menghapus soal
@@ -38,6 +41,11 @@ export default function QuizCRUDPage() {
         if (options.length < 4) {
             setOptions([...options, '']);
         }
+    };
+
+    // Fungsi untuk menetapkan opsi yang benar
+    const setCorrectOptionIndex = (index) => {
+        setCorrectOption(index);
     };
 
     return (
@@ -72,6 +80,14 @@ export default function QuizCRUDPage() {
                                         }}
                                     />
                                 </label>
+                                <button
+                                    className={`mt-2 ${
+                                        correctOption === index ? 'bg-blue-500' : 'bg-gray-300'
+                                    } hover:bg-blue-700 text-white font-bold py-2 px-4 rounded`}
+                                    onClick={() => setCorrectOptionIndex(index)}
+                                >
+                                    Pilih sebagai jawaban benar
+                                </button>
                             </div>
                         ))}
                     </form>
@@ -103,7 +119,7 @@ export default function QuizCRUDPage() {
                                     className="mt-2 bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded ml-2"
                                     onClick={() => updateQuestion(index)}
                                 >
-                                    Perbarui Soal
+                                    Upload Soal
                                 </button>
                             </div>
                         ))}

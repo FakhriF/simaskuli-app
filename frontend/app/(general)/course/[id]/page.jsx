@@ -1,9 +1,11 @@
 import Info from "./info";
+import ViewGradeButton from "./viewgradebutton";
 
 export default function CoursePage({ params }) {
   
   return (
     <div className="w-full p-4 mb-8">
+      <ViewGradeButton id={params.id}></ViewGradeButton>
       <Info id={params.id} />
     
       
