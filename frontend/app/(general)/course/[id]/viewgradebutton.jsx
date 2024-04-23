@@ -13,7 +13,7 @@ export default function ViewGradeButton({id}) {
     useEffect(() => {
         const fetchData = async () => {
             const token = await getToken();
-            const response = await fetch("${process.env.BACKEND_URL}/user", {
+            const response = await fetch(`${process.env.BACKEND_URL}/user`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
