@@ -5,6 +5,7 @@ use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ThreadPostController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\GradesController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -50,5 +51,9 @@ Route::delete('forum/{id}/posts/{postid}', [ThreadPostController::class, 'destro
 
 // Course
 Route::get('course', [CourseController::class, 'view']);
+
+//Grades
+Route::get('course/{course_id}/grades', [GradesController::class, 'getGrades']);
+Route::get('course/{course_id}/grades/{student_id}', [GradesController::class, 'showUserGradesOnCourse']);
 Route::get('course/{id}', [CourseController::class, 'getById']);
 
