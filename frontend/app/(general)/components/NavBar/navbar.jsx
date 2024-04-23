@@ -43,6 +43,13 @@ export default async function Navbar() {
                     >
                         Forum
                     </Link>
+                    <Link
+                        href="/quiz"
+                        className="hover:text-gray-300 font-bold"
+                    >
+                        Quiz
+                    </Link>
+                    
                 </div>
             </div>
 
