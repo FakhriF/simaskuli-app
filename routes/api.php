@@ -58,4 +58,5 @@ Route::get('course', [CourseController::class, 'view']);
 Route::get('course/{course_id}/grades', [GradesController::class, 'getGrades']);
 Route::get('course/{course_id}/grades/{student_id}', [GradesController::class, 'showUserGradesOnCourse']);
 Route::get('course/{id}', [CourseController::class, 'getById']);
+Route::post('course/create', [CourseController::class, 'store']);
 
