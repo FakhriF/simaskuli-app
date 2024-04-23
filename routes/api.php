@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ThreadPostController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\QuizController;
+use App\Http\Controllers\GradesController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -36,17 +37,21 @@ Route::delete('logout', [AuthController::class, 'logout']);
 
 // Thread
 Route::get('forum', [ThreadController::class, 'index']);
+Route::get('forum/search', [ThreadController::class, 'search']);
 Route::get('forum/{id}', [ThreadController::class, 'getForumThread']);
 Route::post('forum', [ThreadController::class, 'store']);
+Route::put('forum/{id}', [ThreadController::class, 'update']);
 Route::delete('forum/{id}', [ThreadController::class, 'destroy']);
 
-// Thread Post
+// Individual Thread
 Route::get('forum/posts', [ThreadPostController::class, 'index']);
 Route::get('forum/{id}/posts', [ThreadPostController::class, 'getPostsByThreadId']);
 Route::get('/forum/{forumid}/posts/{postid}', [ThreadPostController::class, 'showPost']);
 Route::post('forum/{id}/posts', [ThreadPostController::class, 'store']);
+Route::put('forum/{id}/posts/{postid}', [ThreadPostController::class, 'update']);
 Route::delete('forum/{id}/posts/', [ThreadPostController::class, 'destroy']);
 Route::delete('forum/{id}/posts/{postid}', [ThreadPostController::class, 'destroySinglePost']);
+
 
 // Course
 Route::get('course', [CourseController::class, 'view']);
@@ -59,3 +64,10 @@ Route::get('questions/{id}', [QuestionsController::class, 'getQuestionsByQuizId'
 //Quiz
 Route::get('quiz', [QuizController::class, 'index']);
 Route::get('quiz/{id}/questions', [QuestionsController::class, 'getQuestionsByQuizId']);
+
+
+//Grades
+Route::get('course/{course_id}/grades', [GradesController::class, 'getGrades']);
+Route::get('course/{course_id}/grades/{student_id}', [GradesController::class, 'showUserGradesOnCourse']);
+Route::get('course/{id}', [CourseController::class, 'getById']);
+Route::post('course/create', [CourseController::class, 'store']);

@@ -1,4 +1,16 @@
-# Changelog v0.6a (22 April 2024)
+# Changelog v0.5a GO ONLINE (23 April 2024)
+
+## Notes:
+
+-   **PASTIKAN SUDAH TERUPDATE DENGAN MAIN TERLEBIH DAHULU**
+-   Untuk kemudahan migrasi ke server secara mudah, seluruh link fetch ke API dimohon untuk pindah menggunakan variabel env BACKEND_URL.
+Cara penggunaanya `${process.env.BACKEND_URL}/[TARGET_API]`.
+Contoh mau akses /api/users, jadi:
+ `${process.env.BACKEND_URL}/users`.
+Contoh lainnya silahkan lihat pemakaian di halaman profile / login / register / layout.
+
+
+# Changelog v0.5a (22 April 2024)
 
 ## New:
 

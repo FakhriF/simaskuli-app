@@ -26,7 +26,7 @@ export default function ProfileDeletionPage({ email }) {
         try {
             const token = await getToken();
 
-            await fetch("http://localhost:8000/api/user", {
+            await fetch(`${process.env.BACKEND_URL}/user`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",

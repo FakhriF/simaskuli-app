@@ -87,7 +87,7 @@ function StudentRegisterForm() {
 
         try {
             const response = await axios
-                .post("http://localhost:8000/api/register", {
+                .post(`${process.env.BACKEND_URL}/register`, {
                     name: name,
                     email: email,
                     password: password,
@@ -116,7 +116,6 @@ function StudentRegisterForm() {
             }
 
             setLoading(false);
-
         }
     };
 
@@ -206,7 +205,6 @@ function StudentRegisterForm() {
     );
 }
 
-
 function TeacherRegisterForm() {
     const [birthDate, setBirthDate] = useState("");
     const [name, setName] = useState("");
@@ -244,7 +242,7 @@ function TeacherRegisterForm() {
 
         try {
             const response = await axios
-                .post("http://localhost:8000/api/register", {
+                .post(`${process.env.BACKEND_URL}/register`, {
                     name: name,
                     email: email,
                     password: password,
@@ -273,7 +271,6 @@ function TeacherRegisterForm() {
             }
 
             setLoading(false);
-
         }
     };
 

@@ -23,4 +23,5 @@ class Quiz extends Model
     {
         return $this->hasMany(Questions::class);
     }
+    protected $table = 'quiz';
 }

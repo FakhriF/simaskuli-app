@@ -20,7 +20,7 @@ export default function NavBarDropDown({ image }) {
         try {
             const token = await getToken();
 
-            await fetch("http://localhost:8000/api/logout", {
+            await fetch(`${process.env.BACKEND_URL}/api/logout`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",

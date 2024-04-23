@@ -19,8 +19,11 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => [env('FRONTEND_URL', 'http://localhost:3000')],
-
+    'allowed_origins' => [
+        env('FRONTEND_URL', 'http://localhost:3000'),
+        'https://simaskuli.vercel.app',
+    ],
+    
     'allowed_origins_patterns' => [],
 
     'allowed_headers' => ['*'],
