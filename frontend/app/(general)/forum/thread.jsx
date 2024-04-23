@@ -22,14 +22,14 @@ export default function ForumThread({ user }) {
     try {
       setLoading(true);
 
-      let url = `http://localhost:8000/api/forum?page=${currentPage}`;
+      let url = `${process.env.BACKEND_URL}/forum?page=${currentPage}`;
       if (searchQuery) {
         url += `&search=${searchQuery}`;
       }
 
       const [forumRes, usersRes] = await Promise.all([
         fetch(url),
-        fetch(`http://localhost:8000/api/users`)
+        fetch(`${process.env.BACKEND_URL}/users`)
       ]);
 
       const [forumData, userData] = await Promise.all([

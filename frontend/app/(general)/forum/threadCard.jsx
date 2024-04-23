@@ -11,7 +11,7 @@ export default function ThreadCard({ thread, isCreatedByLoggedInUser }) {
 
     const handleDelete = async () => {
         try {
-            const response = await fetch(`http://localhost:8000/api/forum/${thread.id}`, {
+            const response = await fetch(`${process.env.BACKEND_URL}/forum/${thread.id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
