@@ -1,70 +1,102 @@
-/*
-'use client'
+'use client';
 
+import axios from "axios";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { getToken } from "../actions";
-import ThreadCreationForm from "./threadCreationForm";
 
-export const metadata = {
-    title: "Create Course",
-};
-*/
-export default function CreateCoursePage() {
-  return (
-    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
-      <h1 className="text-2xl font-bold mb-4">Create a new course</h1>
-      <form className="space-y-6">
-        <div>
-          <label htmlFor="title" className="block text-sm font-medium text-gray-700">
-            Title
-          </label>
-          <input
-            type="text"
-            name="title"
-            id="title"
-            autoComplete="off"
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-indigo-200 focus:ring-1 sm:text-sm p-2"
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="description" className="block text-sm font-medium text-gray-700">
-            Description
-          </label>
-          <textarea
-            name="description"
-            id="description"
-            rows="3"
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-indigo-200 focus:ring-1 sm:text-sm"
-            required
-          ></textarea>
-        </div>
-        <div>
-          <label htmlFor="coverImage" className="block text-sm font-medium text-gray-700">
-            Cover Image
-          </label>
-          <input
-            type="url"
-            name="image_url"
-            id="image_url"
-            autoComplete="off"
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-indigo-200 focus:ring-1 sm:text-sm p-4"
-            required
-          />
-        </div>
-        {/* Disable interactivity for now */}
-        <button
-          type="submit"
-          className="inline-flex items-center px-4 py-2 bg-gray-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-600 active:bg-gray-700 focus:outline-none focus:border-gray-700 focus:ring focus:ring-gray-200 disabled:opacity-25 transition ease-in-out duration-150"
-          disabled
-        >
-          Create Course
-        </button>
-      </form>
-    </div>
+export default function ThreadCreation({ user }) {
+      const [title, setTitle] = useState('');
+      const [description, setDescription] = useState('');
+      const [learning_outcomes, setLearningOutcomes] = useState("");
+      const [image_url, setImageUrl] = useState("");
+      const [submitted, setSubmitted] = useState(false); 
+  
+      const router = useRouter();
 
-
-  );
+      const handleSubmit = async (e) => {
+          e.preventDefault();
+  
+          try {
+              const response = await axios.post(
+                  "http://localhost:8000/api/course/create",
+                  {
+                      title: title,
+                      description: description,
+                      image_url: image_url,
+                      learning_outcomes: learning_outcomes,
+                      user_id: 19,
+                  }
+              );
+              if (response.status === 201) {
+                  router.push("/course");
+              } else {
+                  setError(response.data.message);
+              }
+              setSubmitted(true); 
+          } catch (error) {
+              setError(error.response.data.message);
+          }
+      };
+      // If form is submitted or cancelled, return null to hide the form
+      if (submitted) {
+          return null;
+      }
+  
+      return (
+        <div>
+          <form
+                className="bg-white shadow-md rounded-lg p-4 "
+                autoComplete="off"
+                onSubmit={handleSubmit}
+            >
+                <h1 className="text-2xl font-semibold mb-4">Create Course</h1>
+                <div className="mb-4">
+                    <label className="block mb-2">Title</label>
+                    <input
+                        type="text"
+                        maxLength="255"
+                        className={`w-full px-4 py-2 border rounded-lg`}
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                        required
+                    />
+                </div>
+                <div className="mb-4">
+                    <label className="block mb-2">Description</label>
+                    <textarea
+                        className="w-full px-4 py-2 border rounded-lg"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        required
+                    ></textarea>
+                </div>
+                <div className="mb-4">
+                    <label className="block mb-2">Learning Outcomes</label>
+                    <textarea
+                        className="w-full px-4 py-2 border rounded-lg"
+                        maxLength="63"
+                        value={learning_outcomes}
+                        onChange={(e) => setLearningOutcomes(e.target.value)}
+                        required
+                    ></textarea>
+                </div>
+                <div className="mb-4">
+                    <label className="block mb-2">Image URL</label>
+                    <input
+                        type="text"
+                        className={`w-full px-4 py-2 border rounded-lg`}
+                        value={image_url}
+                        onChange={(e) => setImageUrl(e.target.value)}
+                        required
+                    />
+                </div>
+                <div className="flex justify-between">
+                    <button className="bg-blue-500 text-white py-2 px-4 rounded-lg w-full mr-2 hover:bg-blue-600">
+                        Create Course
+                    </button>
+                </div>
+            </form>
+      </div>
+          
+      );
 }
-
-

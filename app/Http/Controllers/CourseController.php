@@ -30,4 +30,25 @@ class CourseController extends Controller
         return Course::find($id);
     }
 
+    public function store(Request $request)
+    {
+        $user_id = $request->input('user_id');
+        
+        $user = User::find($user_id);
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+        
+        // Create a new forum thread
+        $course = new Course();
+        $course->title = $request->input('title');
+        $course->description = $request->input('description');
+        $course->learning_outcomes = $request->input('learning_outcomes');
+        $course->image_url = $request->input('image_url');
+        $course->user_id = $user_id;
+        $course->save();
+        
+        return response()->json($course, 201);
+    }
+
 }
