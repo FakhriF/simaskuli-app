@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ThreadPostController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\QuizController;
+use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\GradesController;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -71,3 +72,6 @@ Route::get('course/{course_id}/grades', [GradesController::class, 'getGrades']);
 Route::get('course/{course_id}/grades/{student_id}', [GradesController::class, 'showUserGradesOnCourse']);
 Route::get('course/{id}', [CourseController::class, 'getById']);
 Route::post('course/create', [CourseController::class, 'store']);
+
+//Modules
+Route::get('course/{id}/module', [ModuleController::class,'getModules']);
