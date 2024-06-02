@@ -74,4 +74,4 @@ Route::get('course/{id}', [CourseController::class, 'getById']);
 Route::post('course/create', [CourseController::class, 'store']);
 
 //Modules
-Route::get('course/{id}/module', [ModuleController::class,'getModules']);
+Route::get('course/{id}/module', [ModuleController::class, 'getModulesByCourseId']);

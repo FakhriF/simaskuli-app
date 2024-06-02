@@ -10,10 +10,9 @@ class ModuleController extends Controller
         /**
      * Display a listing of the resource.
      */
-    public function getModules()
+    public function getModulesByCourseId(string $courseId)
     {
-        // Get all courses
-        return Module::all();
+        $moduleOnCourse = Module::where('course_id', $courseId)->get();
+        return response()->json($moduleOnCourse, 200);
     }
-
 }

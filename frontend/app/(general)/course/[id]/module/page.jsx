@@ -1,5 +1,5 @@
 "use client";
-import { Module } from "@/app/(general)/actions/module";
+
 import { Dot, File, Youtube } from "lucide-react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";

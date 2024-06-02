@@ -1,13 +1,13 @@
-'use client';
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import { getToken } from "@/app/(general)/actions";
+"use client";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { getToken } from "../../actions";
 
 export const metadata = {
     title: "ViewGradeButton",
 };
 
-export default function ViewGradeButton({id}) {
+export default function ViewGradeButton({ id }) {
     const [userData, setUserData] = useState({});
 
     useEffect(() => {
@@ -26,27 +26,27 @@ export default function ViewGradeButton({id}) {
 
         fetchData();
     }, []);
-    
+
     const [course, setCourse] = useState({});
 
     useEffect(() => {
         const fetchCourse = async () => {
             try {
-                const res = await fetch(`${process.env.BACKEND_URL}/course/${id}`);
+                const res = await fetch(
+                    `${process.env.BACKEND_URL}/course/${id}`
+                );
                 const course = await res.json();
                 setCourse(course);
             } catch (error) {
-                console.error('Error fetching grades:', error);
+                console.error("Error fetching grades:", error);
             }
         };
 
         fetchCourse();
     }, []);
-    
-    
 
-    console.log(userData)
-    console.log(course)
+    console.log(userData);
+    console.log(course);
     return (
         <div className="my-4">
             {course !== null ? (
