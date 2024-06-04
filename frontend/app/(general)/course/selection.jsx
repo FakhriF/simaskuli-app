@@ -6,7 +6,7 @@ export const metadata = {
 };
 
 export default async function Selection() {
-    const res = await fetch('http://localhost:8000/api/course');
+    const res = await fetch(`${process.env.BACKEND_URL}/course`);
     const data = await res.json();
 
     

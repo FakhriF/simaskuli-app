@@ -17,7 +17,7 @@ export default function ThreadCreationForm({ user, onCancel }) {
 
         try {
             const response = await axios.post(
-                "http://localhost:8000/api/forum",
+                `${process.env.BACKEND_URL}/forum`,
                 {
                     title: title,
                     content: content,

@@ -12,8 +12,7 @@ class ThreadPost extends Model
     protected $table = 'thread_post';
 
     protected $fillable = [
-        'content',
-        'like'
+        'content'
     ];
 
     public function thread()
