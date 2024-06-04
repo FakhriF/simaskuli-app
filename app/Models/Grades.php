@@ -5,23 +5,25 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ThreadPost extends Model
+class Grades extends Model
 {
     use HasFactory;
-
-    protected $table = 'thread_post';
-
     protected $fillable = [
-        'content'
+        'grade'
     ];
 
-    public function thread()
+    public function course()
     {
-        return $this->belongsTo(Thread::class, 'thread_id', 'id');
+        return $this->belongsTo(Course::class, 'course_id', 'id');
     }
 
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function quiz()
+    {
+        return $this->belongsTo(Quiz::class, 'quiz_id', 'id');
     }
 }
