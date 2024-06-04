@@ -68,7 +68,7 @@ Route::get('quiz/{id}/questions', [QuestionsController::class, 'getQuestionsByQu
 
 
 //Grades
-Route::get('course/{course_id}/grades', [GradesController::class, 'getGrades']);
+Route::get('course/{course_id}/grades', [GradesController::class, 'getGradesByCourseId']);
 Route::get('course/{course_id}/grades/{student_id}', [GradesController::class, 'showUserGradesOnCourse']);
 Route::get('course/{id}', [CourseController::class, 'getById']);
 Route::post('course/create', [CourseController::class, 'store']);
