@@ -53,7 +53,7 @@ Route::delete('forum/{id}/posts/{postid}', [ThreadPostController::class, 'destro
 Route::get('course', [CourseController::class, 'view']);
 
 //Grades
-Route::get('course/{course_id}/grades', [GradesController::class, 'getGrades']);
+Route::get('course/{course_id}/grades', [GradesController::class, 'getGradesByCourseId']);
 Route::get('course/{course_id}/grades/{student_id}', [GradesController::class, 'showUserGradesOnCourse']);
 Route::get('course/{id}', [CourseController::class, 'getById']);
 
