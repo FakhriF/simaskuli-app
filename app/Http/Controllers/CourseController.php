@@ -7,7 +7,6 @@ use App\Models\Course;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-
 class CourseController extends Controller
 {
     /**
@@ -19,17 +18,24 @@ class CourseController extends Controller
         return Course::all();
     }
 
-    
+    /**
+     * Display the specified resource.
+     */
     public function getById(int $id)
     {
-        // get one specific data based on id
-        //$a = Course::with('thread', 'user')->where('id', $id)->get();
-
-        
         // Get the course with the specified ID
-        return Course::find($id);
+        $course = Course::find($id);
+
+        if (!$course) {
+            return response()->json(['error' => 'Course not found'], 404);
+        }
+
+        return response()->json($course);
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
         $user_id = $request->input('user_id');
@@ -39,7 +45,7 @@ class CourseController extends Controller
             return response()->json(['error' => 'User not found'], 404);
         }
         
-        // Create a new forum thread
+        // Create a new course
         $course = new Course();
         $course->title = $request->input('title');
         $course->description = $request->input('description');
@@ -51,4 +57,37 @@ class CourseController extends Controller
         return response()->json($course, 201);
     }
 
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, $id)
+    {
+        $course = Course::find($id);
+        if (!$course) {
+            return response()->json(['error' => 'Course not found'], 404);
+        }
+
+        $course->title = $request->input('title', $course->title);
+        $course->description = $request->input('description', $course->description);
+        $course->learning_outcomes = $request->input('learning_outcomes', $course->learning_outcomes);
+        $course->image_url = $request->input('image_url', $course->image_url);
+        $course->save();
+
+        return response()->json($course);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy($id)
+    {
+        $course = Course::find($id);
+        if (!$course) {
+            return response()->json(['error' => 'Course not found'], 404);
+        }
+
+        $course->delete();
+
+        return response()->json(['message' => 'Course deleted successfully']);
+    }
 }
