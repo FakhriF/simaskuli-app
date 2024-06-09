@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Quiz as ModelsQuiz;
+use App\Models\User;
 use App\Models\Questions as ModelsQuestions;
 
 
@@ -34,19 +35,26 @@ class QuizController extends Controller
     return response()->json($questions, 200);
     }
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        //
+        $user_id = $request->input('user_id');
+        
+        $user = User::find($user_id);
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+        
+        // Create a new forum thread
+        $quiz = new ModelsQuiz();
+        $quiz->title = $request->input('title');
+        $quiz->description = $request->input('description');
+        $quiz->dueDate = $request->input('dueDate');
+        $quiz->course_id = 11;
+        $quiz->save();
+        
+        return response()->json($quiz, 201);
     }
 
     /**
@@ -68,16 +76,4 @@ class QuizController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

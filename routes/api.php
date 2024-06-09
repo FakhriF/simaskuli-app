@@ -57,23 +57,29 @@ Route::delete('forum/{id}/posts/{postid}', [ThreadPostController::class, 'destro
 // Course routes
 Route::get('course', [CourseController::class, 'view']);
 Route::get('course/{id}', [CourseController::class, 'getById']);
+Route::post('course/create', [CourseController::class, 'store']);
+Route::put('course/{id}', [CourseController::class, 'update']);
+Route::delete('course/{id}', [CourseController::class, 'destroy']);
 
 // Questions
 Route::get('questions', [QuestionsController::class, 'index']);
 Route::get('questions/{id}', [QuestionsController::class, 'getQuestionsByQuizId']);
+Route::post('questions/add', [QuizController::class, 'store']);
+Route::put('questions/{id}', [CourseController::class, 'update']);
+Route::delete('questions/{id}', [CourseController::class, 'destroy']);
 
 //Quiz
 Route::get('quiz', [QuizController::class, 'index']);
 Route::get('quiz/{id}/questions', [QuestionsController::class, 'getQuestionsByQuizId']);
+Route::post('quiz/add', [QuizController::class, 'store']);
+Route::put('quiz/{id}', [CourseController::class, 'update']);
+Route::delete('quiz/{id}', [CourseController::class, 'destroy']);
 
 
 //Grades
 Route::get('course/{course_id}/grades', [GradesController::class, 'getGradesByCourseId']);
 Route::get('course/{course_id}/grades/{student_id}', [GradesController::class, 'showUserGradesOnCourse']);
-Route::get('course/{id}', [CourseController::class, 'getById']);
-Route::post('course/create', [CourseController::class, 'store']);
-Route::put('course/{id}', [CourseController::class, 'update']);
-Route::delete('course/{id}', [CourseController::class, 'destroy']);
+
 
 //Modules
 Route::get('course/{id}/module', [ModuleController::class, 'getModulesByCourseId']);

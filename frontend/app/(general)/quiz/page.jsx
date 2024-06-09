@@ -37,10 +37,10 @@ export default function QuizPage() {
                 <div className="flex justify-between items-center space-x-1 mb-4">
                 </div>
                 <h1 className="text-3xl font-bold">Quiz</h1>
-            </div>
-            {quizData.map((quizItem) => (
+                {quizData.map((quizItem) => (
+
                 <Link key={quizItem.id} href={`/quiz/${quizItem.id}/questions`}>
-                    <div className="bg-white border border-gray-300 shadow-md rounded-md p-4 mb-4 flex items-end justify-between">
+                    <div className="bg-white border border-gray-300 shadow-md rounded-md p-4 mb-2 mt-2 flex items-end justify-between">
                         <div className="flex items-center">
                             <div className={`bg-500 rounded-full p-1 mr-3`}>
                             </div>
@@ -53,6 +53,17 @@ export default function QuizPage() {
                     </div>
                 </Link>
             ))}
+            
+                <div className="flex justify-between items-center space-x-1 mb-4">
+                    {/* Tombol tambahan untuk menambahkan kuis */}
+                    <Link 
+                        href="/quiz/add" 
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    >
+                        Tambah Kuis
+                    </Link>
+                </div>
+            </div>
         </main>
     );
 }
