@@ -64,11 +64,11 @@ Route::put('course/{id}', [CourseController::class, 'update']);
 Route::delete('course/{id}', [CourseController::class, 'destroy']);
 
 // Enrollment
-Route::get('enrollments', [EnrollmentController::class, 'index']);
-Route::post('enrollments', [EnrollmentController::class, 'store']);
-Route::get('enrollments/user/{user_id}', [EnrollmentController::class, 'getByUserId']);
-Route::get('enrollments/course/{course_id}', [EnrollmentController::class, 'getByCourseId']);
-Route::delete('enrollments', [EnrollmentController::class, 'destroy']);
+Route::get('enrollment', [EnrollmentController::class, 'index']);
+Route::post('enrollment', [EnrollmentController::class, 'store']);
+Route::get('enrollment/user/{user_id}', [EnrollmentController::class, 'getByUserId']);
+Route::get('enrollment/course/{course_id}', [EnrollmentController::class, 'getByCourseId']);
+Route::delete('enrollment', [EnrollmentController::class, 'destroy']);
 
 // Questions
 Route::get('questions', [QuestionsController::class, 'index']);
