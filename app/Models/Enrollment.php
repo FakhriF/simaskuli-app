@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Relations\Pivot;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class Enrollment extends Pivot
+class Enrollment extends Model
 {
     use HasFactory;
 
@@ -12,7 +13,7 @@ class Enrollment extends Pivot
         'user_id',
         'course_id',
     ];
-
+    
     public function user()
     {
         return $this->belongsTo(User::class);
