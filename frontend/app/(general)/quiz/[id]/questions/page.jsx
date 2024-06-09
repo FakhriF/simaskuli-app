@@ -54,7 +54,7 @@ export default function Quiz({ params }) {
     }
 
     return (
-        <div>
+        <div >
             <div>
                 <h1 className="text-xl font-bold mx-4 my-4">
                     {questions[currentQuestionIndex]?.quiz.title}
