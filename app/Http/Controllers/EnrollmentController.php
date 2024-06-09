@@ -27,15 +27,15 @@ class EnrollmentController extends Controller
     // Get enrollments by user_id
     public function getByUserId($user_id)
     {
-        $enrollments = Enrollment::where('user_id', $user_id)->get();
-        return response()->json($enrollments);
+        $enrollment = Enrollment::where('user_id', $user_id)->get();
+        return response()->json($enrollment);
     }
 
     // Get enrollments by course_id
     public function getByCourseId($course_id)
     {
-        $enrollments = Enrollment::where('course_id', $course_id)->get();
-        return response()->json($enrollments);
+        $enrollment = Enrollment::where('course_id', $course_id)->get();
+        return response()->json($enrollment);
     }
 
     // Delete an enrollment by user_id and course_id

@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class Enrollment extends Pivot
 {
+    use HasFactory;
+
     protected $fillable = [
         'user_id',
         'course_id',
     ];
-
-    public $timestamps = false;
 
     public function user()
     {
