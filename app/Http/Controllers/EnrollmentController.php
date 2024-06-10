@@ -38,16 +38,11 @@ class EnrollmentController extends Controller
         return response()->json($enrollment);
     }
 
-    // Delete an enrollment by user_id and course_id
-    public function destroy(Request $request)
+    // Delete an enrollment by course_id and user_id
+    public function destroy($course_id, $user_id)
     {
-        $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'course_id' => 'required|exists:courses,id',
-        ]);
-
-        $enrollment = Enrollment::where('user_id', $request->user_id)
-            ->where('course_id', $request->course_id)
+        $enrollment = Enrollment::where('course_id', $course_id)
+            ->where('user_id', $user_id)
             ->first();
 
         if (!$enrollment) {
@@ -57,5 +52,15 @@ class EnrollmentController extends Controller
         $enrollment->delete();
 
         return response()->json(['message' => 'Enrollment deleted successfully']);
+    }
+
+    // Check if enrollment exists by course_id and user_id
+    public function checkEnrollment($course_id, $user_id)
+    {
+        $enrollment = Enrollment::where('course_id', $course_id)
+            ->where('user_id', $user_id)
+            ->exists();
+
+        return response()->json(['exists' => $enrollment]);
     }
 }

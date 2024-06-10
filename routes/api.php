@@ -69,7 +69,8 @@ Route::get('enrollment', [EnrollmentController::class, 'index']);
 Route::post('enrollment', [EnrollmentController::class, 'store']);
 Route::get('enrollment/user/{user_id}', [EnrollmentController::class, 'getByUserId']);
 Route::get('enrollment/course/{course_id}', [EnrollmentController::class, 'getByCourseId']);
-Route::delete('enrollment', [EnrollmentController::class, 'destroy']);
+Route::delete('enrollment/{course_id}/{user_id}', [EnrollmentController::class, 'destroy']);
+Route::get('enrollment/{course_id}/{user_id}', [EnrollmentController::class, 'checkEnrollment']);
 
 // Questions
 Route::get('questions', [QuestionsController::class, 'index']);
