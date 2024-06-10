@@ -14,5 +14,6 @@ class Course extends Model
         'description',
         'image_url',
         'learning_outcomes',
+        'building_id',
     ];
 }

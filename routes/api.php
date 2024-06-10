@@ -10,6 +10,7 @@ use App\Http\Controllers\QuizController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\GradesController;
 use App\Http\Controllers\EnrollmentController;
+use App\Http\Controllers\BuildingsController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -92,3 +93,6 @@ Route::get('course/{course_id}/grades/{student_id}', [GradesController::class, '
 
 //Modules
 Route::get('course/{id}/module', [ModuleController::class, 'getModulesByCourseId']);
+
+//Buildings
+Route::get('course/{course_id}/building', [BuildingsController::class, 'getBuildingByCourseId']);
