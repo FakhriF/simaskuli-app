@@ -1,68 +1,69 @@
-"use client";
-import React, { useState } from 'react';
+'use client';
+
+import { getToken } from "@/app/(general)/actions";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function QuizPage() {
-    const [selectedOption, setSelectedOption] = useState(null);
+    const [quizData, setQuizData] = useState([]);
 
-    // Fungsi untuk menangani klik opsi
-    const handleOptionClick = (option) => {
-        // Jika opsi yang dipilih sama dengan opsi yang diklik, maka atur kembali ke null
-        if (selectedOption === option) {
-            setSelectedOption(null);
-        } else {
-            // Jika tidak, atur opsi yang dipilih ke opsi yang diklik
-            setSelectedOption(option);
-        }
-    };
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const token = await getToken();
+                const response = await fetch("http://localhost:8000/api/quiz", { // Endpoint untuk mengambil data kuis
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                setQuizData(data);
+            } catch (error) {
+                console.error('Error fetching quiz data:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     return (
-        <div className="mx-auto">
-            <div className="bg-transparent border-b border-gray-300">
-                <h1 className="text-xl font-bold mx-4 my-4">Nama mata pelajaran</h1>
-            </div>
-            <div className="flex flex-col items-left justify-left max-w-7xl mx-auto my-24 p-6 bg-white border-2 border-gray-300 rounded-lg shadow-lg">
-                <p className="text-xl font-bold">Ceritanya soal?</p>
-                <div
-                    className={`${
-                        selectedOption === 1 ? 'bg-blue-500' : 'bg-gray-500'
-                    } text-white font-bold py-2 px-4 rounded my-4`}
-                    onClick={() => handleOptionClick(1)} // Menangani klik opsi
-                >
-                    <button>Opsi 1</button>
+        <main className="py-8">
+            <div className="max-w-7xl mx-auto px-6 space-y-3 sm:px-6 lg:px-8">
+                <div className="flex justify-between items-center space-x-1 mb-4">
                 </div>
-                <div
-                    className={`${
-                        selectedOption === 2 ? 'bg-blue-500' : 'bg-gray-500'
-                    } text-white font-bold py-2 px-4 rounded my-4`}
-                    onClick={() => handleOptionClick(2)} // Menangani klik opsi
-                >
-                    <button>Opsi 2</button>
-                </div>
-                <div
-                    className={`${
-                        selectedOption === 3 ? 'bg-blue-500' : 'bg-gray-500'
-                    } text-white font-bold py-2 px-4 rounded my-4`}
-                    onClick={() => handleOptionClick(3)} // Menangani klik opsi
-                >
-                    <button>Opsi 3</button>
-                </div>
-                <div
-                    className={`${
-                        selectedOption === 4 ? 'bg-blue-500' : 'bg-gray-500'
-                    } text-white font-bold py-2 px-4 rounded my-4`}
-                    onClick={() => handleOptionClick(4)} // Menangani klik opsi
-                >
-                    <button>Opsi 4</button>
-                </div>
-                <div className="border-t border-gray-300 py-4">
-                    <button className="float-left hover:bg-blue-500 hover:text-white bg-gray-300 text-gray-400 font-bold py-2 px-4 rounded">
-                        Kembali
-                    </button>
-                    <button className="float-right hover:bg-blue-500 hover:text-white bg-blue-500 text-white font-bold py-2 px-4 rounded">
-                        Lanjutkan
-                    </button>
+                <h1 className="text-3xl font-bold">Quiz</h1>
+                {quizData.map((quizItem) => (
+
+                <Link key={quizItem.id} href={`/quiz/${quizItem.id}/questions`}>
+                    <div className="bg-white border border-gray-300 shadow-md rounded-md p-4 mb-2 mt-2 flex items-end justify-between">
+                        <div className="flex items-center">
+                            <div className={`bg-500 rounded-full p-1 mr-3`}>
+                            </div>
+                            <div>
+                                <h2 className="text-xl font-semibold">{quizItem.title}</h2>
+                                <p className="text-gray-500 text-sm">{quizItem.description}</p>
+                                <p className="text-gray-500 text-sm">Due Date: {quizItem.dueDate}</p>
+                            </div>
+                        </div>
+                    </div>
+                </Link>
+            ))}
+            
+                <div className="flex justify-between items-center space-x-1 mb-4">
+                    {/* Tombol tambahan untuk menambahkan kuis */}
+                    <Link 
+                        href="/quiz/add" 
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    >
+                        Tambah Kuis
+                    </Link>
                 </div>
             </div>
-        </div>
+        </main>
     );
 }

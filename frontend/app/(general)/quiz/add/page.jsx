@@ -7,8 +7,7 @@ import { useState } from "react";
 export default function ThreadCreation({ user }) {
       const [title, setTitle] = useState('');
       const [description, setDescription] = useState('');
-      const [learning_outcomes, setLearningOutcomes] = useState("");
-      const [image_url, setImageUrl] = useState("");
+      const [dueDate, setDueDate] = useState("");
       const [submitted, setSubmitted] = useState(false); 
   
       const router = useRouter();
@@ -18,23 +17,22 @@ export default function ThreadCreation({ user }) {
   
           try {
               const response = await axios.post(
-                  "http://localhost:8000/api/course/create",
+                  "http://localhost:8000/api/quiz/add",
                   {
-                      title: title,
-                      description: description,
-                      image_url: image_url,
-                      learning_outcomes: learning_outcomes,
+                      title,
+                      description,
+                      dueDate,
                       user_id: 19,
                   }
               );
               if (response.status === 201) {
-                  router.push("/course");
+                  router.push("/quiz");
               } else {
-                  setError(response.data.message);
+                  throw new Error(response.data.message);
               }
               setSubmitted(true); 
           } catch (error) {
-              setError(error.response.data.message);
+              console.error(error);
           }
       };
       // If form is submitted or cancelled, return null to hide the form
@@ -49,7 +47,7 @@ export default function ThreadCreation({ user }) {
                 autoComplete="off"
                 onSubmit={handleSubmit}
             >
-                <h1 className="text-2xl font-semibold mb-4">Create Course</h1>
+                <h1 className="text-2xl font-semibold mb-4">Create Quiz</h1>
                 <div className="mb-4">
                     <label className="block mb-2">Title</label>
                     <input
@@ -71,28 +69,18 @@ export default function ThreadCreation({ user }) {
                     ></textarea>
                 </div>
                 <div className="mb-4">
-                    <label className="block mb-2">Learning Outcomes</label>
-                    <textarea
-                        className="w-full px-4 py-2 border rounded-lg"
-                        maxLength="63"
-                        value={learning_outcomes}
-                        onChange={(e) => setLearningOutcomes(e.target.value)}
-                        required
-                    ></textarea>
-                </div>
-                <div className="mb-4">
-                    <label className="block mb-2">Image URL</label>
+                    <label className="block mb-2">Due Date</label>
                     <input
-                        type="text"
-                        className={`w-full px-4 py-2 border rounded-lg`}
-                        value={image_url}
-                        onChange={(e) => setImageUrl(e.target.value)}
+                        type="date"
+                        className="w-full px-4 py-2 border rounded-lg"
+                        value={dueDate}
+                        onChange={(e) => setDueDate(e.target.value)}
                         required
                     />
                 </div>
                 <div className="flex justify-between">
                     <button className="bg-blue-500 text-white py-2 px-4 rounded-lg w-full mr-2 hover:bg-blue-600">
-                        Create Course
+                        Create Quiz
                     </button>
                 </div>
             </form>
@@ -100,3 +88,4 @@ export default function ThreadCreation({ user }) {
           
       );
 }
+
