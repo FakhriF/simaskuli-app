@@ -17,17 +17,11 @@ class ThreadController extends Controller
      */
     public function index()
     {
-        $perPage = 5; 
-        $threads = Thread::with('user')->paginate($perPage);
-
+        $threads = Thread::with('user')->get();
+    
         return response()->json([
-        'data' => $threads->items(),
-        'meta' => [
-            'current_page' => $threads->currentPage(),
-            'total_pages' => $threads->lastPage(),
-        ],
-    ]);
-        
+            'data' => $threads,
+        ]);
     }
 
     public function search(Request $request)
