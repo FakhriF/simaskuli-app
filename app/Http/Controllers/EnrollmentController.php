@@ -22,26 +22,17 @@ class EnrollmentController extends Controller
             'course_id' => 'required|exists:courses,id',
         ]);
 
-        // Check if the user exists
-        $user = User::find($request->input('user_id'));
-        if (!$user) {
-            return response()->json(['error' => 'User not found'], 404);
+        // Try to create a new enrollment or throw an error if it already exists
+        try {
+            $enrollment = Enrollment::create([
+                'user_id' => $request->input('user_id'),
+                'course_id' => $request->input('course_id'),
+            ]);
+            return response()->json($enrollment, 201);
+        } catch (\Illuminate\Database\QueryException $e) {
+            return response()->json(['error' => 'Enrollment already exists'], 409);
         }
-
-        // Check if the course exists
-        $course = Course::find($request->input('course_id'));
-        if (!$course) {
-            return response()->json(['error' => 'Course not found'], 404);
-        }
-
-        // Create a new enrollment
-        $enrollment = new Enrollment();
-        $enrollment->user_id = $request->input('user_id');
-        $enrollment->course_id = $request->input('course_id');
-        $enrollment->save();
-
-        return response()->json($enrollment, 201);
-    }   
+    } 
 
     // Get enrollments by user_id
     public function getByUserId($user_id)
@@ -60,15 +51,13 @@ class EnrollmentController extends Controller
     // Delete an enrollment by course_id and user_id
     public function destroy($course_id, $user_id)
     {
-        $enrollment = Enrollment::where('course_id', $course_id)
+        $deletedRows = Enrollment::where('course_id', $course_id)
             ->where('user_id', $user_id)
-            ->first();
+            ->delete();
 
-        if (!$enrollment) {
+        if ($deletedRows === 0) {
             return response()->json(['error' => 'Enrollment not found'], 404);
         }
-
-        $enrollment->delete();
 
         return response()->json(['message' => 'Enrollment deleted successfully']);
     }
