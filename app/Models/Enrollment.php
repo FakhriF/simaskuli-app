@@ -13,6 +13,8 @@ class Enrollment extends Model
         'user_id',
         'course_id',
     ];
+
+    public $timestamps = false;
     
     public function user()
     {
