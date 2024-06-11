@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Enrollment;
 use Illuminate\Http\Request;
+use App\Models\Enrollment;
+use App\Models\Course;
+use App\Models\User;
 
 class EnrollmentController extends Controller
 {
@@ -14,15 +16,32 @@ class EnrollmentController extends Controller
 
     public function store(Request $request)
     {
+        // Validate the request data
         $request->validate([
             'user_id' => 'required|exists:users,id',
             'course_id' => 'required|exists:courses,id',
         ]);
 
-        $enrollment = Enrollment::create($request->all());
+        // Check if the user exists
+        $user = User::find($request->input('user_id'));
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+
+        // Check if the course exists
+        $course = Course::find($request->input('course_id'));
+        if (!$course) {
+            return response()->json(['error' => 'Course not found'], 404);
+        }
+
+        // Create a new enrollment
+        $enrollment = new Enrollment();
+        $enrollment->user_id = $request->input('user_id');
+        $enrollment->course_id = $request->input('course_id');
+        $enrollment->save();
 
         return response()->json($enrollment, 201);
-    }
+    }   
 
     // Get enrollments by user_id
     public function getByUserId($user_id)
