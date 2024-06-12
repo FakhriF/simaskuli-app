@@ -26,7 +26,7 @@ class QuizController extends Controller
     public function getQuestionsByQuizId($quizId)
     {
     // Mengambil kuis berdasarkan ID
-    $quiz = Quiz::findOrFail($quizId);
+    $quiz = ModelsQuiz::findOrFail($quizId);
 
     // Mengambil pertanyaan yang terkait dengan kuis
     $questions = $quiz->questions;
@@ -34,6 +34,7 @@ class QuizController extends Controller
     // Mengembalikan respons JSON dengan pertanyaan yang ditemukan
     return response()->json($questions, 200);
     }
+    
     /**
      * Store a newly created resource in storage.
      */
@@ -64,7 +65,7 @@ class QuizController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $quiz = Quiz::find($id);
+        $quiz = ModelsQuiz::find($id);
         if (!$quiz) {
             return response()->json(['error' => 'Quiz not found'], 404);
         }
@@ -77,13 +78,13 @@ class QuizController extends Controller
 
         return response()->json($quiz);
     }
+    
     public function destroy($id)
     {
-        $quiz = Quiz::find($id);
+        $quiz = ModelsQuiz::find($id);
         if (!$quiz) {
             return response()->json(['error' => 'Quiz not found'], 404);
         }
-
         $quiz->delete();
 
         return response()->json(['message' => 'Quiz deleted successfully']);
