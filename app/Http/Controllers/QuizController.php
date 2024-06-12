@@ -81,4 +81,15 @@ class QuizController extends Controller
     /**
      * Update the specified resource in storage.
      */
+    public function destroy($id)
+    {
+        $quiz = Quiz::find($id);
+        if (!$quiz) {
+            return response()->json(['error' => 'Quiz not found'], 404);
+        }
+
+        $quiz->delete();
+
+        return response()->json(['message' => 'Quiz deleted successfully']);
+    }
 }
