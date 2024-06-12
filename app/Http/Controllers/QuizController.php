@@ -51,7 +51,7 @@ class QuizController extends Controller
         $quiz->title = $request->input('title');
         $quiz->description = $request->input('description');
         $quiz->dueDate = $request->input('dueDate');
-        $quiz->course_id = 11;
+        $quiz->course_id = $request->input('course_id');
         $quiz->save();
         
         return response()->json($quiz, 201);
@@ -68,9 +68,21 @@ class QuizController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function update(Request $request, $id)
     {
         //
+        $quiz = Quiz::find($id);
+        if (!$quiz) {
+            return response()->json(['error' => 'Course not found'], 404);
+        }
+
+        $quiz->title = $request->input('title', $quiz->title);
+        $quiz->description = $request->input('description', $quiz->description);
+        $quiz->dueDate = $request->input('dueDate', $quiz->dueDate);
+        $quiz->course_id = $request->input('course_id', $quiz->course_id);
+        $quiz->save();
+
+        return response()->json($quiz);
     }
 
     /**

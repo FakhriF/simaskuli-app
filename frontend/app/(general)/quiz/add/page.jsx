@@ -8,6 +8,7 @@ export default function ThreadCreation({ user }) {
       const [title, setTitle] = useState('');
       const [description, setDescription] = useState('');
       const [dueDate, setDueDate] = useState("");
+      const [course_id, setCourseId] = useState("");
       const [submitted, setSubmitted] = useState(false); 
   
       const router = useRouter();
@@ -22,6 +23,7 @@ export default function ThreadCreation({ user }) {
                       title,
                       description,
                       dueDate,
+                      course_id,
                       user_id: 19,
                   }
               );
@@ -75,6 +77,15 @@ export default function ThreadCreation({ user }) {
                         className="w-full px-4 py-2 border rounded-lg"
                         value={dueDate}
                         onChange={(e) => setDueDate(e.target.value)}
+                        required
+                    />
+                </div>
+                <div className="mb-4">
+                    <label className="block mb-2">Course</label>
+                    <input
+                        className="w-full px-4 py-2 border rounded-lg"
+                        value={course_id}
+                        onChange={(e) => setCourseId(e.target.value)}
                         required
                     />
                 </div>
