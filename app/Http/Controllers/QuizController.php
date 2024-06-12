@@ -64,7 +64,7 @@ class QuizController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $quiz = Quiz::find($id);
+        $quiz = ModelsQuiz::find($id);
         if (!$quiz) {
             return response()->json(['error' => 'Course not found'], 404);
         }
@@ -83,7 +83,7 @@ class QuizController extends Controller
      */
     public function destroy($id)
     {
-        $quiz = Quiz::find($id);
+        $quiz = ModelsQuiz::find($id);
         if (!$quiz) {
             return response()->json(['error' => 'Quiz not found'], 404);
         }
