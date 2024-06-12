@@ -9,20 +9,15 @@ class Enrollment extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'user_id',
-        'course_id',
-    ];
-
     public $timestamps = false;
     
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     public function course()
     {
-        return $this->belongsTo(Course::class);
+        return $this->belongsTo(Course::class, 'course_id', 'id');
     }
 }
