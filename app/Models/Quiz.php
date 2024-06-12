@@ -16,7 +16,8 @@ class Quiz extends Model
     protected $fillable = [
         'title', 
         'description', 
-        'dueDate'
+        'dueDate',
+        'course_id'
     ];
 
     public function course()
