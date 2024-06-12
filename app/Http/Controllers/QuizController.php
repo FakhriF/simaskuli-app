@@ -26,7 +26,7 @@ class QuizController extends Controller
     public function getQuestionsByQuizId($quizId)
     {
     // Mengambil kuis berdasarkan ID
-    $quiz = Quiz::findOrFail($quizId);
+    $quiz = ModelsQuiz::findOrFail($quizId);
 
     // Mengambil pertanyaan yang terkait dengan kuis
     $questions = $quiz->questions;
@@ -34,6 +34,7 @@ class QuizController extends Controller
     // Mengembalikan respons JSON dengan pertanyaan yang ditemukan
     return response()->json($questions, 200);
     }
+    
     /**
      * Store a newly created resource in storage.
      */
