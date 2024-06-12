@@ -66,7 +66,7 @@ class QuizController extends Controller
         //
         $quiz = Quiz::find($id);
         if (!$quiz) {
-            return response()->json(['error' => 'Course not found'], 404);
+            return response()->json(['error' => 'Quiz not found'], 404);
         }
 
         $quiz->title = $request->input('title', $quiz->title);
@@ -77,8 +77,15 @@ class QuizController extends Controller
 
         return response()->json($quiz);
     }
+    public function destroy($id)
+    {
+        $quiz = Quiz::find($id);
+        if (!$quiz) {
+            return response()->json(['error' => 'Quiz not found'], 404);
+        }
 
-    /**
-     * Update the specified resource in storage.
-     */
+        $quiz->delete();
+
+        return response()->json(['message' => 'Quiz deleted successfully']);
+    }
 }
