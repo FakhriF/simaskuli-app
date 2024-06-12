@@ -17,7 +17,10 @@ class QuestionsController extends Controller
         return Questions::with('quiz')->get();
 
     }
-
+    public function getQuestionsById(int $id)
+    {
+        return Questions::find($id);
+    }
     public function getQuestionsByQuizId(int $id)
     {
         //
