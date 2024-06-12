@@ -27,19 +27,6 @@ class QuestionsController extends Controller
         return Questions::where('quiz_id', $id)->with('quiz')->get();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        // Create a new forum thread
-        
-    }
-
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         //
@@ -58,11 +45,9 @@ class QuestionsController extends Controller
 
     
     
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
-        //
-        $questions = Quiz::find($id);
+        $questions = Questions::find($id);
         if (!$questions) {
             return response()->json(['error' => 'Question not found'], 404);
         }
