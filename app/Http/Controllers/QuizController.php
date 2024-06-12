@@ -39,13 +39,6 @@ class QuizController extends Controller
      */
     public function store(Request $request)
     {
-        $user_id = $request->input('user_id');
-        
-        $user = User::find($user_id);
-        if (!$user) {
-            return response()->json(['error' => 'User not found'], 404);
-        }
-        
         // Create a new forum thread
         $quiz = new ModelsQuiz();
         $quiz->title = $request->input('title');
