@@ -24,6 +24,7 @@ class EnrollmentController extends Controller
         return response()->json(['exists' => $enrollment]);
     }
 
+    // Store an enrollment
     public function store(Request $request)
     {
         // Validate the request data
@@ -31,13 +32,13 @@ class EnrollmentController extends Controller
             'user_id' => 'required|exists:users,id',
             'course_id' => 'required|exists:courses,id',
         ]);
-
+    
         // Check if the enrollment already exists
         $checkResponse = $this->checkEnrollment($request->input('course_id'), $request->input('user_id'))->getData();
         if ($checkResponse->exists) {
             return response()->json(['error' => 'Enrollment already exists'], 409);
         }
-
+    
         // Create a new enrollment
         try {
             $enrollment = Enrollment::create([
@@ -46,9 +47,14 @@ class EnrollmentController extends Controller
             ]);
             return response()->json($enrollment, 201);
         } catch (\Illuminate\Database\QueryException $e) {
-            return response()->json(['error' => 'An error occurred while creating the enrollment'], 500);
+            \Log::error('Database Query Exception: '.$e->getMessage());
+            return response()->json(['error' => 'An error occurred while creating the enrollment: ' . $e->getMessage()], 500);
+        } catch (\Exception $e) {
+            \Log::error('General Exception: '.$e->getMessage());
+            return response()->json(['error' => 'An unexpected error occurred: ' . $e->getMessage()], 500);
         }
     }
+    
 
     // Get enrollments by user_id
     public function getByUserId($user_id)
