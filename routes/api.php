@@ -84,7 +84,7 @@ Route::get('quiz', [QuizController::class, 'index']);
 Route::get('quiz/{id}/questions', [QuestionsController::class, 'getQuestionsByQuizId']);
 Route::post('quiz/add', [QuizController::class, 'store']);
 Route::put('quiz/{id}', [CourseController::class, 'update']);
-Route::delete('quiz/{id}', [CourseController::class, 'destroy']);
+Route::delete('quiz/{id}', [QuizController::class, 'destroy']);
 
 
 //Grades
