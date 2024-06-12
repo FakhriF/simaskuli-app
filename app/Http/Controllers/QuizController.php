@@ -67,7 +67,7 @@ class QuizController extends Controller
         //
         $quiz = ModelsQuiz::find($id);
         if (!$quiz) {
-            return response()->json(['error' => 'Quiz not found'], 404);
+            return response()->json(['error' => 'Questions not found'], 404);
         }
 
         $quiz->title = $request->input('title', $quiz->title);
