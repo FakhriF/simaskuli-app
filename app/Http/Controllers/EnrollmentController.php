@@ -14,6 +14,16 @@ class EnrollmentController extends Controller
         return Enrollment::all();
     }
 
+    // Check if enrollment exists by course_id and user_id
+    public function checkEnrollment($course_id, $user_id)
+    {
+        $enrollment = Enrollment::where('course_id', $course_id)
+            ->where('user_id', $user_id)
+            ->exists();
+
+        return response()->json(['exists' => $enrollment]);
+    }
+
     public function store(Request $request)
     {
         // Validate the request data
@@ -22,7 +32,13 @@ class EnrollmentController extends Controller
             'course_id' => 'required|exists:courses,id',
         ]);
 
-        // Try to create a new enrollment or throw an error if it already exists
+        // Check if the enrollment already exists
+        $checkResponse = $this->checkEnrollment($request->input('course_id'), $request->input('user_id'))->getData();
+        if ($checkResponse->exists) {
+            return response()->json(['error' => 'Enrollment already exists'], 409);
+        }
+
+        // Create a new enrollment
         try {
             $enrollment = Enrollment::create([
                 'user_id' => $request->input('user_id'),
@@ -30,9 +46,9 @@ class EnrollmentController extends Controller
             ]);
             return response()->json($enrollment, 201);
         } catch (\Illuminate\Database\QueryException $e) {
-            return response()->json(['error' => 'Enrollment already exists'], 409);
+            return response()->json(['error' => 'An error occurred while creating the enrollment'], 500);
         }
-    } 
+    }
 
     // Get enrollments by user_id
     public function getByUserId($user_id)
@@ -60,15 +76,5 @@ class EnrollmentController extends Controller
         }
 
         return response()->json(['message' => 'Enrollment deleted successfully']);
-    }
-
-    // Check if enrollment exists by course_id and user_id
-    public function checkEnrollment($course_id, $user_id)
-    {
-        $enrollment = Enrollment::where('course_id', $course_id)
-            ->where('user_id', $user_id)
-            ->exists();
-
-        return response()->json(['exists' => $enrollment]);
     }
 }

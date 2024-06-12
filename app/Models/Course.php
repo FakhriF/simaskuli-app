@@ -16,4 +16,8 @@ class Course extends Model
         'learning_outcomes',
         'building_id',
     ];
+
+    public function user(){
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }
