@@ -75,9 +75,9 @@ Route::get('enrollment/{course_id}/{user_id}', [EnrollmentController::class, 'ch
 // Questions
 Route::get('questions', [QuestionsController::class, 'index']);
 Route::get('questions/{id}', [QuestionsController::class, 'getQuestionsById']);
-Route::post('questions/add', [QuizController::class, 'store']);
+Route::post('questions/add', [QuestionsController::class, 'store']);
 Route::put('questions/{id}', [QuestionsController::class, 'update']);
-Route::delete('questions/{id}', [CourseController::class, 'destroy']);
+Route::delete('questions/{id}', [QuestionsController::class, 'destroy']);
 
 //Quiz
 Route::get('quiz', [QuizController::class, 'index']);
